@@ -1,0 +1,3 @@
+This used to be the Apps directory in my ROMS repository. I'm breaking
+it out into an optional submodule. I'll keep updating these (for now)
+but created a parallel Old_Apps repo for the ones I won't be maintaining.
