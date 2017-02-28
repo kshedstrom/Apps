@@ -28,8 +28,8 @@
 #define SOLVE3D
 #define SALINITY
 #ifdef SOLVE3D
-# define SPLINES_VDIFF
-# define SPLINES_VVISC
+# undef SPLINES_VDIFF
+# undef SPLINES_VVISC
 # define RI_SPLINES
 #endif
 #define FLOATS
@@ -52,7 +52,7 @@
 # undef CICE_MODEL
 # ifdef CICE_MODEL
 #  define SNOWFALL
-#  define SNOW_FROM_RAIN
+#  undef SNOW_FROM_RAIN
 #  define INI_GLORYS_ICE
 #  undef ICE_LOG_LAYER
 # endif
@@ -61,7 +61,8 @@
 # ifdef ICE_MODEL
 #  define ANA_ICE
 #  define INI_GLORYS_ICE
-#  define  OUTFLOW_MASK
+#  define SNOWFALL
+#  define OUTFLOW_MASK
 #  define ICE_LANDFAST
 #  define ICE_THERMO
 #  define ICE_MK
@@ -134,7 +135,7 @@
 #  undef LMD_BKPP
 #  define LMD_NONLOCAL
 #  define LMD_SHAPIRO
-#  undef LMD_DDMIX
+#  define LMD_DDMIX
 # endif
 
 # undef GLS_MIXING
@@ -152,7 +153,6 @@
 # define CORE_FORCING
 # define BULK_FLUXES
 # define CCSM_FLUXES
-# undef ARCTIC_MERRA_HACK
 # if defined BULK_FLUXES || defined CCSM_FLUXES
 #  define LONGWAVE_OUT
 #  undef DIURNAL_SRFLUX
