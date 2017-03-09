@@ -12,6 +12,11 @@
 **  Options for ARCTIC simulation
 */
 
+#define CICE_COUPLING
+#undef ROMS_MODEL
+#undef WRF_MODEL
+#define MCT_LIB
+
 #define NO_HIS
 #define GLOBAL_PERIODIC
 #define HDF5
@@ -50,14 +55,14 @@
 
 #ifdef SOLVE3D
 # undef CICE_MODEL
-# ifdef CICE_MODEL
+# if defined CICE_MODEL || defined CICE_COUPLING
 #  define SNOWFALL
 #  undef SNOW_FROM_RAIN
 #  define INI_GLORYS_ICE
 #  undef ICE_LOG_LAYER
 # endif
 
-# define  ICE_MODEL
+# undef  ICE_MODEL
 # ifdef ICE_MODEL
 #  define ANA_ICE
 #  define INI_GLORYS_ICE
