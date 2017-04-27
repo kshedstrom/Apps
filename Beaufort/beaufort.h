@@ -1,7 +1,7 @@
 /*
 ** svn $Id$
 *******************************************************************************
-** Copyright (c) 2002-2016 The ROMS/TOMS Group
+** Copyright (c) 2002-2017 The ROMS/TOMS Group
 **
 **   Licensed under a MIT/X style license
 **
@@ -34,7 +34,7 @@
 #endif
 #undef FLOATS
 #define STATIONS
-#undef WET_DRY
+#define WET_DRY
 
 #undef T_PASSIVE
 #ifdef T_PASSIVE
