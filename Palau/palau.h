@@ -55,7 +55,7 @@
 #define T_PASSIVE
 #ifdef T_PASSIVE
 # define ANA_BPFLUX        /* analytical bottom passive tracers fluxes */
-# define ANA_SPFLUX 
+# define ANA_SPFLUX
 # define ANA_PASSIVE
 # undef TRC_PSOURCE
 # undef ANA_TRC_PSOURCE

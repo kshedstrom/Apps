@@ -110,7 +110,7 @@
       END DO
 
 !
-!  Set nudging boundaries coefficients zone for ARCTIC2 
+!  Set nudging boundaries coefficients zone for ARCTIC2
 !  nudging coefficients vary from a thirty
 !  days time scale at the boundary point to decrease linearly to 0 days
 !  (i.e no nudging) 15 grids points away from the boundary.
@@ -126,14 +126,14 @@
 !        END DO
 !      END DO
 ! cff3-point wide linearly tapered nudging zone
-      DO j=MAX(JstrT,Mm(ng)+1-INT(cff3)),JendT       ! NORTH boundary
+      DO j=MAX(JstrT,Mm(ng)+1-INT(cff3)),JendT      ! NORTH boundary
         DO i=IstrT,IendT
           wrk(i,j)=MAX(wrk(i,j),                                        &
      &             cff1+REAL(Mm(ng)+1-j,r8)*(cff2-cff1)/cff3)
         END DO
       END DO
 ! cff3-point wide linearly tapered nudging zone
-      DO i=IstrT,MIN(INT(cff3),IendT)                ! WEST boundary
+      DO i=IstrT,MIN(INT(cff3),IendT)               ! WEST boundary
         DO j=JstrT,JendT
           wrk(i,j)=MAX(wrk(i,j),                                        &
      &             cff2+(cff3-REAL(i,r8))*(cff1-cff2)/cff3)
@@ -185,14 +185,6 @@
           END DO
         END DO
       END IF
-! cff3-point wide linearly tapered nudging zone
-!      cff3=60.0_r8                           ! width of layer in grid points
-!      DO i=IstrT,MIN(INT(cff3),IendT)                ! WEST boundary
-!        DO j=JstrT,JendT
-!          wrk(i,j)=MAX(wrk(i,j),                                        &
-!     &             cff2+(cff3-REAL(i,r8))*(cff1-cff2)/cff3)
-!        END DO
-!      END DO
       IF (LnudgeAICLM(ng)) THEN
         DO j=JstrT,JendT
           DO i=IstrT,IendT

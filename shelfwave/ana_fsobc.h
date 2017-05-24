@@ -59,9 +59,20 @@
 !  Local variable declarations.
 !
       integer :: i, j
-      real(r8) :: cff, fac, omega, phase, val
+      real(r8) :: kk, ll, alpha, omega
+      real(r8) :: cos_wt, cos_ky, sin_wt, sin_ky
+      real(r8), parameter :: Lx = 100.e+3
+      real(r8), parameter :: Ly = 50.e+3
+      real(r8), parameter :: my_amp = 1.e+3
+      integer,  parameter :: jj = 2    ! cross-shore mode number
 
 #include "set_bounds.h"
+
+      alpha = 1. / Ly
+      ll = 2. * pi / Lx
+      kk = jj * pi / el(ng)
+      omega = 2 * alpha * GRID(ng)%f(Istr,Jstr) * ll /                  &
+     &           (kk*kk + alpha*alpha + ll*ll)
 !
 !-----------------------------------------------------------------------
 !  Free-surface open boundary conditions.
@@ -76,7 +87,12 @@
       IF (LBC(iwest,isFsur,ng)%acquire.and.                             &
      &    DOMAIN(ng)%Western_Edge(tile)) THEN
         DO j=JstrT,JendT
-          BOUNDARY(ng)%zeta_west(j)=0.0_r8
+          sin_wt = sin(ll*GRID(ng)%xr(0,j) - omega*time(ng))
+          cos_wt = cos(ll*GRID(ng)%xr(0,j) - omega*time(ng))
+          sin_ky = sin(kk * GRID(ng)%yr(0,j))
+          cos_ky = cos(kk * GRID(ng)%yr(0,j))
+          BOUNDARY(ng)%zeta_west(j) = exp(- alpha * GRID(ng)%yr(0,j))   &
+     &            * my_amp * cos_wt * alpha / g * sin_ky
         END DO
       END IF
       IF (LBC(isouth,isFsur,ng)%acquire.and.                            &

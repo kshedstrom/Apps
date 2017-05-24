@@ -113,7 +113,7 @@
       alpha = 1. / Ly
       ll = 2. * pi / Lx
       kk = jj * pi / el(ng)
-      omega = 2 * alpha * GRID(ng)%f(Istr,Jstr) * ll /                  & 
+      omega = 2 * alpha * GRID(ng)%f(Istr,Jstr) * ll /                  &
      &           (kk*kk + alpha*alpha + ll*ll)
 !
 !-----------------------------------------------------------------------
@@ -141,12 +141,13 @@
         END DO
 
         DO j=JstrP,JendT
-          sin_wt = sin(ll*GRID(ng)%xv(0,j) - omega*time(ng))
-          cos_wt = cos(ll*GRID(ng)%xv(0,j) - omega*time(ng))
-          sin_ky = sin(kk * GRID(ng)%yv(0,j))
-          cos_ky = cos(kk * GRID(ng)%yv(0,j))
-          BOUNDARY(ng)%vbar_west(j) = ll * exp(- alpha *                &
-     &              my_amp * GRID(ng)%yv(0,j)) * sin_wt * sin_ky
+!         sin_wt = sin(ll*GRID(ng)%xv(0,j) - omega*time(ng))
+!         cos_wt = cos(ll*GRID(ng)%xv(0,j) - omega*time(ng))
+!         sin_ky = sin(kk * GRID(ng)%yv(0,j))
+!         cos_ky = cos(kk * GRID(ng)%yv(0,j))
+!         BOUNDARY(ng)%vbar_west(j) = ll * exp(- alpha *                &
+!    &              my_amp * GRID(ng)%yv(0,j)) * sin_wt * sin_ky
+          BOUNDARY(ng)%vbar_west(j)=0.0_r8
         END DO
       END IF
       IF (LBC(isouth,isUbar,ng)%acquire.and.                            &
