@@ -138,11 +138,12 @@
      &    LBC(ieast,isVbar,ng)%acquire.and.                             &
      &    DOMAIN(ng)%Eastern_Edge(tile)) THEN
         DO j=JstrT,JendT
-          cff=SQRT(g*GRID(ng)%h(Iend,j))
-          val=fac*EXP(-GRID(ng)%f(Iend,j)*GRID(ng)%yp(Istr-1,j)/cff)
-          BOUNDARY(ng)%ubar_east(j)=(val*cff/GRID(ng)%h(Iend,j))*       &
-     &                              SIN(omega*GRID(ng)%xp(Iend,j)/cff-  &
-     &                                  omega*time(ng))
+!         cff=SQRT(g*GRID(ng)%h(Iend,j))
+!         val=fac*EXP(-GRID(ng)%f(Iend,j)*GRID(ng)%yp(Istr-1,j)/cff)
+!         BOUNDARY(ng)%ubar_east(j)=(val*cff/GRID(ng)%h(Iend,j))*       &
+!    &                              SIN(omega*GRID(ng)%xp(Iend,j)/cff-  &
+!    &                                  omega*time(ng))
+          BOUNDARY(ng)%ubar_east(j) = 0.0
         END DO
         DO j=JstrP,JendT
           BOUNDARY(ng)%vbar_east(j)=0.0_r8

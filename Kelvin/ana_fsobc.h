@@ -81,10 +81,11 @@
       IF (LBC(ieast,isFsur,ng)%acquire.and.                             &
      &    DOMAIN(ng)%Eastern_Edge(tile)) THEN
         DO j=JstrT,JendT
-          cff=1.0_r8/SQRT(g*GRID(ng)%h(Istr-1,j))
-          val=fac*EXP(-GRID(ng)%f(Istr-1,j)*GRID(ng)%yp(Iend,j)*cff)
-          BOUNDARY(ng)%zeta_east(j)=val*COS(omega*GRID(ng)%xp(Iend,j)*  &
-     &                                      cff-omega*time(ng))
+!         cff=1.0_r8/SQRT(g*GRID(ng)%h(Istr-1,j))
+!         val=fac*EXP(-GRID(ng)%f(Istr-1,j)*GRID(ng)%yp(Iend,j)*cff)
+!         BOUNDARY(ng)%zeta_east(j)=val*COS(omega*GRID(ng)%xp(Iend,j)*  &
+!    &                                      cff-omega*time(ng))
+          BOUNDARY(ng)%zeta_east(j) = 0.0
         END DO
       END IF
       RETURN

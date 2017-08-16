@@ -54,7 +54,7 @@
 /* ice */
 
 #ifdef SOLVE3D
-# define CICE_MODEL
+# define CICE_COUPLING
 # ifdef CICE_MODEL
 #  define SNOWFALL
 #  define SNOW_FROM_RAIN
