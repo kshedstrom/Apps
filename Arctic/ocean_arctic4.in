@@ -73,7 +73,7 @@
 ! Input variable information file name.  This file needs to be processed
 ! first so all information arrays can be initialized properly.
 
-     VARNAME = /center/w/kate/Arctic2/External/varinfo_jra.dat
+     VARNAME = /center1/w/kate/Arctic2/External/varinfo_jra.dat
 
 ! Number of nested grids.
 
@@ -240,7 +240,7 @@ ad_VolCons(north) ==  F                            ! northern boundary
 
        NRREC == 0
    LcycleRST == T
-        NRST == 8640
+        NRST == 4320
         NSTA == 36
         NFLT == 36
 !       NRST == 5400
@@ -412,11 +412,11 @@ LtracerSponge == F F                            ! temperature, salinity, inert
          Zos == 0.02d0                     ! m
 
 ! Height (m) of atmospheric measurements for Bulk fluxes parameterization.
-! 2 for MERRA
+! 2 for MERRA, 10 for JRA
 
-      BLK_ZQ == 2.0d0                     ! air humidity
-      BLK_ZT == 2.0d0                     ! air temperature
-      BLK_ZW == 2.0d0                     ! winds
+      BLK_ZQ == 10.0d0                     ! air humidity
+      BLK_ZT == 10.0d0                     ! air temperature
+      BLK_ZW == 10.0d0                     ! winds
 
 ! Minimum depth for wetting and drying.
 
@@ -499,15 +499,14 @@ LtracerSponge == F F                            ! temperature, salinity, inert
 ! point Sources/Sinks (like river runoff transport) and mass point
 ! Sources/Sinks (like volume vertical influx), [1:Ngrids].
 
-      LuvSrc == F                          ! horizontal momentum transport
+      LuvSrc == T                          ! horizontal momentum transport
        LwSrc == F                          ! volume vertical influx
 
 ! Logical switches (TRUE/FALSE) to activate tracers point Sources/Sinks
 ! (like river runoff) and to specify which tracer variables to consider:
 ! [1:NAT+NPT,Ngrids].  See glossary below for details.
 
-  LtracerSrc == F F F F F F F F            ! temperature, salinity, inert
-!  LtracerSrc == T T                        ! temperature, salinity, inert
+  LtracerSrc == T T                        ! temperature, salinity, inert
 
 ! Logical switches (TRUE/FALSE) to read and process climatology fields.
 ! See glossary below for details.
@@ -516,8 +515,7 @@ LtracerSponge == F F                            ! temperature, salinity, inert
       Lm2CLM == T                          ! 2D momentum
       Lm3CLM == T                          ! 3D momentum
 
-  LtracerCLM == T T F F F F F F            ! temperature, salinity, inert
-!  LtracerCLM == T T                        ! temperature, salinity, inert
+  LtracerCLM == T T                        ! temperature, salinity, inert
 
 ! Logical switches (TRUE/FALSE) to nudge the desired climatology field(s).
 ! If not analytical climatology fields, users need to turn ON the logical
@@ -993,9 +991,9 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 
 ! Input NetCDF file names, [1:Ngrids].
 
-     GRDNAME == /center/w/kate/Arctic2/Files/grid_Arctic_4.nc
-     ININAME == /center/w/kate/Arctic2/Files/ARCTIC4_IC_2010_09_27_SODA3.3.1.nc
-!    ININAME == arctic4_rst.nc
+     GRDNAME == /center1/AKWATERS/kshedstrom/Arctic2/Files/grid_Arctic_4.nc
+     ININAME == /center1/AKWATERS/kshedstrom/Arctic2/Files/ARCTIC4_IC_2010_09_27_SODA3.3.1.nc
+!    ININAME == arctic4_foo.nc
      ITLNAME == ocean_itl.nc
      IRPNAME == ocean_irp.nc
      IADNAME == ocean_iad.nc
@@ -1015,12 +1013,12 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 ! except the last one.
 
    NCLMFILES == 1                         ! number of climate files
-     CLMNAME == /center/w/kate/Arctic2/Files/Arctic4_clm_2010_SODA3.3.1.nc |
-                /center/w/kate/Arctic2/Files/Arctic4_clm_2011_SODA3.3.1.nc
+     CLMNAME == /center1/AKWATERS/kshedstrom/Arctic2/Files/Arctic4_clm_2010_SODA3.3.1.nc |
+                /center1/AKWATERS/kshedstrom/Arctic2/Files/Arctic4_clm_2011_SODA3.3.1.nc
 
     NBCFILES == 1                          ! number of boundary files
-     BRYNAME == /center/w/kate/Arctic2/Files/Arctic4_bdry_2010_SODA3.3.1.nc |
-                /center/w/kate/Arctic2/Files/Arctic4_bdry_2011_SODA3.3.1.nc
+     BRYNAME == /center1/AKWATERS/kshedstrom/Arctic2/Files/Arctic4_bdry_2010_SODA3.3.1.nc |
+                /center1/AKWATERS/kshedstrom/Arctic2/Files/Arctic4_bdry_2011_SODA3.3.1.nc
 
 ! Input climatology nudging coefficients file name.
 
@@ -1028,11 +1026,11 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 
 ! Input Sources/Sinks forcing (like river runoff) file name.
 
-     SSFNAME == /center/w/kate/Arctic2/Files/Arctic2_rivers.nc
+     SSFNAME == /center1/AKWATERS/kshedstrom/Arctic2/Files/Arctic2_rivers.nc
 
 ! Input tidal forcing file name.
 
-    TIDENAME == /center/w/kate/Arctic2/Files/Arctic2_tides_otps.nc
+    TIDENAME == /center1/AKWATERS/kshedstrom/Arctic2/Files/Arctic2_tides_otps.nc
 
 ! Input forcing NetCDF file name(s).
 !
@@ -1054,29 +1052,27 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 
     NFFILES == 11                          ! number of forcing files
 
-    FRCNAME == /center/d/kate/JRA55-raw/slp.2010.30Jun2016.nc   |
-               /center/d/kate/JRA55-raw/slp.2011.30Jun2016.nc   \
-               /center/d/kate/JRA55-raw/q_10.2010.30Jun2016.nc   |
-               /center/d/kate/JRA55-raw/q_10.2011.30Jun2016.nc   \
-               /center/d/kate/JRA55-raw/t_10.2010.30Jun2016.nc   |
-               /center/d/kate/JRA55-raw/t_10.2011.30Jun2016.nc   \
-               /center/d/kate/JRA55-raw/rain.2010.15Dec2016.nc   |
-               /center/d/kate/JRA55-raw/rain.2011.15Dec2016.nc   \
-               /center/d/kate/JRA55-raw/snow.2010.15Dec2016.nc   |
-               /center/d/kate/JRA55-raw/snow.2011.15Dec2016.nc   \
-               /center/d/kate/JRA55-raw/rsds.2010.30Jun2016.nc  |
-               /center/d/kate/JRA55-raw/rsds.2011.30Jun2016.nc  \
-               /center/d/kate/JRA55-raw/rlds.2010.30Jun2016.nc  |
-               /center/d/kate/JRA55-raw/rlds.2011.30Jun2016.nc  \
-               /center/d/kate/JRA55-raw/u_10.2010.30Jun2016.nc  |
-               /center/d/kate/JRA55-raw/u_10.2011.30Jun2016.nc  \
-               /center/d/kate/JRA55-raw/v_10.2010.30Jun2016.nc  |
-               /center/d/kate/JRA55-raw/v_10.2011.30Jun2016.nc  \
-               /center/d/kate/JRA55-raw/runoff_all.2010.15Dec2016.nc   |
-               /center/d/kate/JRA55-raw/runoff_all.2011.15Dec2016.nc   \
-               /center/w/kate/CORE2/sss_fill_2004.nc
+    FRCNAME ==  /center1/AKWATERS/kate/JRA55-do/slp.2010.18Aug2017.nc   |
+                /center1/AKWATERS/kate/JRA55-do/slp.2011.18Aug2017.nc   \
+               /center1/AKWATERS/kate/JRA55-do/q_10.2010.30Jun2016.nc   |
+               /center1/AKWATERS/kate/JRA55-do/q_10.2011.30Jun2016.nc   \
+               /center1/AKWATERS/kate/JRA55-do/t_10.2010.30Jun2016.nc   |
+               /center1/AKWATERS/kate/JRA55-do/t_10.2011.30Jun2016.nc   \
+               /center1/AKWATERS/kate/JRA55-do/rain.2010.15Dec2016.nc   |
+               /center1/AKWATERS/kate/JRA55-do/rain.2011.15Dec2016.nc   \
+               /center1/AKWATERS/kate/JRA55-do/snow.2010.15Dec2016.nc   |
+               /center1/AKWATERS/kate/JRA55-do/snow.2011.15Dec2016.nc   \
+               /center1/AKWATERS/kate/JRA55-do/rsds.2010.30Jun2016.nc  |
+               /center1/AKWATERS/kate/JRA55-do/rsds.2011.30Jun2016.nc  \
+               /center1/AKWATERS/kate/JRA55-do/rlds.2010.30Jun2016.nc  |
+               /center1/AKWATERS/kate/JRA55-do/rlds.2011.30Jun2016.nc  \
+               /center1/AKWATERS/kate/JRA55-do/u_10.2010.30Jun2016.nc  |
+               /center1/AKWATERS/kate/JRA55-do/u_10.2011.30Jun2016.nc  \
+               /center1/AKWATERS/kate/JRA55-do/v_10.2010.30Jun2016.nc  |
+               /center1/AKWATERS/kate/JRA55-do/v_10.2011.30Jun2016.nc  \
+               /center1/AKWATERS/kshedstrom/Arctic2/Files/runoff_ARCTIC2_daitren_southern_clim.nc \
+               /center1/AKWATERS/kshedstrom/CORE2/sss_fill_2004.nc
 
-!               /center/w/kate/Arctic2/Files/runoff_ARCTIC2_daitren_southern_1978-2007.nc \
 ! Output NetCDF file names, [1:Ngrids].
 
      DAINAME == arctic4_dai.nc
@@ -1097,10 +1093,10 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 ! Input ASCII parameter filenames.
 
      APARNAM =  External/assimilation.in
-     SPOSNAM =  /center/w/kate/Arctic2/External/stations_arctic.in
-     FPOSNAM =  /center/w/kate/Arctic2/External/floats_arctic.in
-     IPARNAM =  /center/w/kate/Arctic2/External/ice.in
-     BPARNAM =  /center/w/kate/Arctic2/External/nemuro_iron.in
+     SPOSNAM =  /center1/AKWATERS/kshedstrom/Arctic2/External/stations_arctic.in
+     FPOSNAM =  /center1/AKWATERS/kshedstrom/Arctic2/External/floats_arctic.in
+     IPARNAM =  /center1/AKWATERS/kshedstrom/Arctic2/External/ice.in
+     BPARNAM =  /center1/AKWATERS/kshedstrom/Arctic2/External/nemuro_iron.in
      SPARNAM =  External/sediment.in
      USRNAME =  External/MyFile.dat
 
@@ -1456,7 +1452,7 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 !                saved every NRST timesteps without recycling.  The restart
 !                fields are written at all levels in double precision.
 !
-! NRST         Number of timesteps between the writing of re-start fields.
+! NRST         Number of timesteps between the writing of restart fields.
 !                Set NRST=0 to suppress writing of RESTART file.
 !
 ! NSTA         Number of timesteps between writing data into STATIONS file.
@@ -1997,7 +1993,19 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 !                      0 <  theta_s <= 10.0
 !                      0 <= theta_b <=  4.0
 !
-!              Many other stretching functions (Vstretching>4) are possible
+!                 (5) Souza et al. (2015) quadratic Legendre polynomial function
+!                     that allows higher resolution near the surface,
+!                     Vstretching=5. It is similar to Vstretching=4, but the
+!                     fractional stretched vertical coordinate (s) is re-defined
+!                     as:
+!
+!                       s(k)=- [(k*k - 2*k*N + k + N*N - N) / (N*N - N)]
+!                            - weight * [(k*k - k*N) / (1 - N)]
+!
+!                     at vertical W-points, k=0,...,N and weight=0.01. To get
+!                     the equation at vertical RHO-points, replace k with k-0.5.
+!
+!              Many other stretching functions (Vstretching>5) are possible
 !              provided that:
 !
 !                * C(s) is a dimensionless, nonlinear, monotonic function.

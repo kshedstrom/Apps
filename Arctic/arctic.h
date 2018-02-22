@@ -204,12 +204,9 @@
 
 # define UV_DRAG_GRID
 # define ANA_DRAG
-# define LIMIT_BSTRESS
-# undef UV_LDRAG
-# define UV_QDRAG
-#else
-# define UV_QDRAG
 #endif
+#define LIMIT_BSTRESS
+#define UV_QDRAG
 
 /* Boundary conditions...careful with grid orientation */
 

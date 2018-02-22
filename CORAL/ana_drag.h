@@ -80,7 +80,10 @@
 !***********************************************************************
 !
       USE mod_param
+      USE mod_parallel
       USE mod_grid
+      USE mod_ncparam
+      USE mod_iounits
       USE mod_scalars
 #if defined SEDIMENT || defined BBL_MODEL
       USE mod_sediment
@@ -90,6 +93,7 @@
 #ifdef DISTRIBUTE
       USE mp_exchange_mod, ONLY : mp_exchange2d
 #endif
+      USE stats_mod, ONLY : stats_2dfld
 !
 !  Imported variable declarations.
 !
@@ -125,11 +129,28 @@
 !
 !  Local variable declarations.
 !
+      logical, save :: first = .TRUE.
+
       integer :: i, j
 
       real(r8) :: cff, h0
 
+      TYPE (T_STATS), save :: Stats
+
 #include "set_bounds.h"
+!
+!-----------------------------------------------------------------------
+!  Initialize field statistics structure.
+!-----------------------------------------------------------------------
+!
+      IF (first) THEN
+        first=.FALSE.
+        Stats % count=0.0_r8
+        Stats % min=Large
+        Stats % max=-Large
+        Stats % avg=0.0_r8
+        Stats % rms=0.0_r8
+      END IF
 !
 !-----------------------------------------------------------------------
 #if defined UV_LOGDRAG
@@ -183,19 +204,44 @@
       END DO
 # endif
 #endif
-
+!
+!  Report statistics.
+!
+#if defined UV_LOGDRAG
+      CALL stats_2dfld (ng, tile, iNLM, r2dvar, Stats,                  &
+     &                  LBi, UBi, LBj, UBj, ZoBot)
+      IF (DOMAIN(ng)%NorthEast_Corner(tile)) THEN
+        WRITE (stdout,10) 'time invariant, bottom roughness '//         &
+     &                    'length scale: ZoBot',                        &
+     &                    ng, Stats%min, Stats%max
+      END IF
+#elif defined UV_LDRAG
+      CALL stats_2dfld (ng, tile, iNLM, r2dvar, Stats,                  &
+     &                  LBi, UBi, LBj, UBj, rdrag)
+      IF (DOMAIN(ng)%NorthEast_Corner(tile)) THEN
+        WRITE (stdout,10) 'linear bottom drag coefficient: rdrag',      &
+     &                    ng, Stats%min, Stats%max
+      END IF
+#elif defined UV_QDRAG
+      CALL stats_2dfld (ng, tile, iNLM, r2dvar, Stats,                  &
+     &                  LBi, UBi, LBj, UBj, rdrag2)
+      IF (DOMAIN(ng)%NorthEast_Corner(tile)) THEN
+        WRITE (stdout,10) 'quadratic bottom drag coefficient: rdrag2',  &
+     &                    ng, Stats%min, Stats%max
+      END IF
+#endif
 !
 !  Exchange boundary data.
 !
       IF (EWperiodic(ng).or.NSperiodic(ng)) THEN
         CALL exchange_r2d_tile (ng, tile,                               &
-     &                        LBi, UBi, LBj, UBj,                       &
+     &                          LBi, UBi, LBj, UBj,                     &
 #if defined UV_LOGDRAG
-     &                        ZoBot)
+     &                          ZoBot)
 #elif defined UV_LDRAG
-     &                        rdrag)
+     &                          rdrag)
 #elif defined UV_QDRAG
-     &                        rdrag2)
+     &                          rdrag2)
 #endif
       END IF
 
@@ -225,6 +271,10 @@
         END DO
       END DO
 #endif
+!
+  10  FORMAT (3x,' ANA_DRAG    - ',a,/,19x,                             &
+     &        '(Grid = ',i2.2,', Min = ',1p,e15.8,0p,                   &
+     &                         ' Max = ',1p,e15.8,0p,')')
 
       RETURN
       END SUBROUTINE ana_drag_tile

@@ -112,7 +112,7 @@ GridsInLayer =  1
 !       NtileI == 3                               ! I-direction partition
 ! ORDER MATTERS HERE!
 !       NtileJ == 4                              ! J-direction partition
-       NtileJ == 12                              ! J-direction partition
+       NtileJ == 6                               ! J-direction partition
 
 ! PIO number of I/O tasks
 
@@ -209,8 +209,7 @@ ad_VolCons(north) ==  F                            ! northern boundary
 
 ! Time-Stepping parameters.
 
-!       NTIMES == 4
-       NTIMES == 172800
+      NTIMES == 172800
           DT == 200.0d0
      NDTFAST == 30
 
@@ -233,9 +232,6 @@ ad_VolCons(north) ==  F                            ! northern boundary
 
        NRREC == 0
    LcycleRST == T
-!        NRST == 576
-!        NSTA == 24
-!        NFLT == 24
         NRST == 4320
         NSTA == 18
         NFLT == 18
@@ -244,15 +240,11 @@ ad_VolCons(north) ==  F                            ! northern boundary
 ! Output history, average, diagnostic files parameters.
 
      LDEFOUT == T
-!        NHIS == 86400
-!     NDEFHIS == 86400
         NHIS == 2160
      NDEFHIS == 2160
       NTSAVG == 1
         NAVG == 432
      NDEFAVG == 432
-!        NAVG == 576
-!     NDEFAVG == 576
      NTSAVG2 == 1
        NAVG2 == 54
     NDEFAVG2 == 1944
@@ -1960,7 +1952,19 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 !                      0 <  theta_s <= 10.0
 !                      0 <= theta_b <=  4.0
 !
-!              Many other stretching functions (Vstretching>4) are possible
+!                 (5) Souza et al. (2015) quadratic Legendre polynomial function
+!                     that allows higher resolution near the surface,
+!                     Vstretching=5. It is similar to Vstretching=4, but the
+!                     fractional stretched vertical coordinate (s) is re-defined
+!                     as:
+!
+!                       s(k)=- [(k*k - 2*k*N + k + N*N - N) / (N*N - N)]
+!                            - weight * [(k*k - k*N) / (1 - N)]
+!
+!                     at vertical W-points, k=0,...,N and weight=0.01. To get
+!                     the equation at vertical RHO-points, replace k with k-0.5.
+!
+!              Many other stretching functions (Vstretching>5) are possible
 !              provided that:
 !
 !                * C(s) is a dimensionless, nonlinear, monotonic function.
