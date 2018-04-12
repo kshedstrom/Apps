@@ -1013,6 +1013,7 @@ lccsm_fields(idRunoff) == F
 
 ! Input Sources/Sinks forcing (like river runoff) file name.
 
+     NSSFFILES == 1
      SSFNAME == ocean_rivers.nc
 
 ! Input tidal forcing file name.

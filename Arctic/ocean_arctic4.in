@@ -73,7 +73,7 @@
 ! Input variable information file name.  This file needs to be processed
 ! first so all information arrays can be initialized properly.
 
-     VARNAME = /center1/w/kate/Arctic2/External/varinfo_jra.dat
+     VARNAME = /center1/AKWATERS/kshedstrom/Arctic2/External/varinfo_jra.dat
 
 ! Number of nested grids.
 
@@ -106,11 +106,11 @@ GridsInLayer =  1
 ! shared-memory configurations used to determine tile horizontal range
 ! indices (Istr,Iend) and (Jstr,Jend), [1:Ngrids].
 
-       NtileI == 4                               ! I-direction partition
-!      NtileI == 6                               ! I-direction partition
+!      NtileI == 4                               ! I-direction partition
+       NtileI == 6                               ! I-direction partition
 ! ORDER MATTERS HERE!
-!      NtileJ == 32                              ! J-direction partition
-       NtileJ == 24                              ! J-direction partition
+       NtileJ == 32                              ! J-direction partition
+!      NtileJ == 24                              ! J-direction partition
 
 ! PIO number of I/O tasks
 
@@ -277,8 +277,8 @@ ad_VolCons(north) ==  F                            ! northern boundary
 !       NAVG == 1440
 !    NDEFAVG == 1440
      NTSAVG2 == 1
-       NAVG2 == 36000000000000
-    NDEFAVG2 == 864000000000000
+       NAVG2 == 3600000
+    NDEFAVG2 == 8640000
 !      NAVG2 == 45
 !   NDEFAVG2 == 1080
 !      NAVG2 == 48
@@ -1027,7 +1027,8 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 
 ! Input Sources/Sinks forcing (like river runoff) file name.
 
-     SSFNAME == /center1/AKWATERS/kshedstrom/Arctic2/Files/Arctic2_rivers.nc
+     NSSFFILES == 1
+     SSFNAME == /center1/AKWATERS/kshedstrom/Arctic2/Files/Arctic4_rivers.nc
 
 ! Input tidal forcing file name.
 
@@ -1071,7 +1072,7 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
                /center1/AKWATERS/kate/JRA55-do/u_10.2011.30Jun2016.nc  \
                /center1/AKWATERS/kate/JRA55-do/v_10.2010.30Jun2016.nc  |
                /center1/AKWATERS/kate/JRA55-do/v_10.2011.30Jun2016.nc  \
-               /center1/AKWATERS/kshedstrom/Arctic2/Files/runoff_ARCTIC2_daitren_southern_clim.nc \
+               /center1/AKWATERS/kshedstrom/Arctic2/Files/runoff_ARCTIC4_daitren_southern_clim.nc \
                /center1/AKWATERS/kshedstrom/CORE2/sss_fill_2004.nc
 
 ! Output NetCDF file names, [1:Ngrids].

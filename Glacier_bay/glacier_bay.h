@@ -9,15 +9,12 @@
 **
 *******************************************************************************
 **
-**  Options for ARCTIC simulation
+**  Options for NWGOA simulation
 */
 
 #define NO_HIS
-#define GLOBAL_PERIODIC
 #define HDF5
 #define DEFLATE
-#undef PARALLEL_IN
-#undef PARALLEL_OUT
 #define PERFECT_RESTART
 
 /* general */
@@ -32,51 +29,27 @@
 # undef SPLINES_VVISC
 # define RI_SPLINES
 #endif
-#define FLOATS
-#define STATIONS
+#undef FLOATS
+#undef STATIONS
 #define WET_DRY
-
-#undef T_PASSIVE
-#ifdef T_PASSIVE
-# define ANA_BPFLUX        /* analytical bottom passive tracers fluxes */
-# define ANA_SPFLUX
-# define ANA_PASSIVE
-# define TRC_PSOURCE
-# define ANA_TRC_PSOURCE
-# define AGE_MEAN
-#endif
 
 /* ice */
 
 #ifdef SOLVE3D
-# undef CICE_MODEL
-# ifdef CICE_MODEL
-#  define SNOWFALL
-#  undef SNOW_FROM_RAIN
-#  define INI_GLORYS_ICE
-#  undef ICE_LOG_LAYER
-# endif
-
 # define  ICE_MODEL
 # ifdef ICE_MODEL
 #  define ANA_ICE
-#  define INI_GLORYS_ICE
-#  define SNOWFALL
-#  define OUTFLOW_MASK
-#  define ICE_LANDFAST
-#  define ICE_THERMO
-#  define ICE_MK
-#  define ICE_MOMENTUM
-#  define ICE_MOM_BULK
-#  define ICE_EVP
-#  define ICE_STRENGTH_QUAD
-#  define ICE_ADVECT
-#  define ICE_SMOLAR
-#  define ICE_UPWIND
-#  define ICE_BULK_FLUXES
-#  define ICE_CONVSNOW
-#  define ICE_I_O
-#  define ICE_DIAGS
+#  define  ICE_THERMO
+#  define  ICE_MK
+#  define  ICE_MOMENTUM
+#  define  ICE_MOM_BULK
+#  define  ICE_EVP
+#  define  ICE_STRENGTH_QUAD
+#  define  ICE_ADVECT
+#  define  ICE_SMOLAR
+#  define  ICE_UPWIND
+#  define  ICE_BULK_FLUXES
+#  define  ICE_I_O
 # endif
 #endif
 
@@ -90,7 +63,6 @@
 #define AVERAGES
 #undef AVERAGES2
 #ifdef SOLVE3D
-# undef AVERAGES_DETIDE
 # undef DIAGNOSTICS_TS
 #endif
 #undef DIAGNOSTICS_UV
@@ -105,6 +77,7 @@
 #define UV_COR
 
 #ifdef SOLVE3D
+# undef TS_A4HADVECTION
 # define TS_U3HADVECTION
 # define TS_C4VADVECTION
 # undef TS_MPDATA
@@ -117,9 +90,19 @@
 #define VISC_GRID
 
 #ifdef SOLVE3D
-# define TS_DIF2
-# define MIX_GEO_TS
-# define DIFF_GRID
+# undef TS_DIF2
+# undef MIX_GEO_TS
+# undef DIFF_GRID
+#endif
+
+#define T_PASSIVE
+#ifdef T_PASSIVE
+# define ANA_BPFLUX        /* analytical bottom passive tracers fluxes */
+# define ANA_SPFLUX
+# define ANA_PASSIVE
+# define TRC_PSOURCE
+# define ANA_TRC_PSOURCE
+# define AGE_MEAN
 #endif
 
 /* vertical mixing */
@@ -135,7 +118,7 @@
 #  undef LMD_BKPP
 #  define LMD_NONLOCAL
 #  define LMD_SHAPIRO
-#  define LMD_DDMIX
+#  undef LMD_DDMIX
 # endif
 
 # undef GLS_MIXING
@@ -144,6 +127,10 @@
 # if defined GLS_MIXING || defined MY25_MIXING
 #  define KANTHA_CLAYSON
 #  define N2S2_HORAVG
+#  define CRAIG_BANNER
+#  define CHARNOK
+#  undef GERBI_TKE_FLUX
+#  undef AKLIMIT
 # endif
 #endif
 
@@ -158,37 +145,38 @@
 #  undef DIURNAL_SRFLUX
 #  define SOLAR_SOURCE
 #  define EMINUSP
-#  undef ALBEDO_CLOUD
 #  define ALBEDO_CURVE  /* for water */
-#  undef ICE_ALB_EC92   /* for ice */
-#  define ALBEDO_CSIM   /* for ice */
-#  undef ALBEDO_FILE    /* for both */
+#  define ICE_ALB_EC92  /* for ice */
+#  undef ALBEDO_CSIM   /* for ice */
+#  undef ALBEDO_FILE  /* for both */
 #  undef LONGWAVE
 # endif
+# define SCORRECTION
+#else
+# define ANA_SMFLUX
+# define ANA_STFLUX
+# define ANA_SSFLUX
 #endif
 
 /* surface and side corrections */
 
 #ifdef SOLVE3D
-# define SCORRECTION
 # define NO_SCORRECTION_ICE
-# undef QCORRECTION
-#endif
-
-#ifdef SOLVE3D
-# define ANA_NUDGCOEF
 #endif
 
 /* point sources (rivers, line sources) */
 
+/* Not using Runoff now */
 #ifdef SOLVE3D
-# undef RUNOFF
-# define TWO_D_TRACER_SOURCE
+# define ONE_TRACER_SOURCE
 #endif
 
-/* tides */
+/* tides coming from OBCs */
+#if defined AVERAGES && !defined USE_DEBUG
+# define FILTERED
+#endif
 
-#define LTIDES
+#undef LTIDES
 #ifdef LTIDES
 # if defined AVERAGES && !defined USE_DEBUG
 #  define FILTERED
@@ -197,15 +185,14 @@
 # define UV_TIDES
 # define ADD_FSOBC
 # define ADD_M2OBC
-# undef RAMP_TIDES
 # define TIDES_ASTRO
-# define POT_TIDES
-
-# define UV_DRAG_GRID
-# define ANA_DRAG
+# undef POT_TIDES
 #endif
-#define LIMIT_BSTRESS
+
+#define UV_DRAG_GRID
+#define ANA_DRAG
 #define UV_QDRAG
+#define LIMIT_BSTRESS
 
 /* Boundary conditions...careful with grid orientation */
 
@@ -219,3 +206,4 @@
 #else
 # define ANA_SMFLUX
 #endif
+

@@ -944,6 +944,7 @@ Dout(iTvdif) == T T T T     ! temp_vdiff, ...    vertical diffusion
 
 ! Input Sources/Sinks forcing (like river runoff) file name.
 
+     NSSFFILES == 1
      SSFNAME == ocean_rivers.nc ocean_rivers.nc
 
 ! Input forcing NetCDF file name(s).  The USER has the option to enter

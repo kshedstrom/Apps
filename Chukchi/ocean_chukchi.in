@@ -995,6 +995,7 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 
 ! Input Sources/Sinks forcing (like river runoff) file name.
 
+     NSSFFILES == 1
      SSFNAME == /center1/w/kshedstrom/Chukchi/Files/NWGOA3_rivers.nc
 
 ! Input tidal forcing file name.
