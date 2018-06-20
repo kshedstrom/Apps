@@ -32,9 +32,10 @@
 # undef SPLINES_VVISC
 # define RI_SPLINES
 #endif
-#define FLOATS
+#undef FLOATS
 #define STATIONS
 #define WET_DRY
+#define IMPLICIT_NUDGING
 
 #undef T_PASSIVE
 #ifdef T_PASSIVE
@@ -88,9 +89,8 @@
 # define RST_SINGLE
 #endif
 #define AVERAGES
-#undef AVERAGES2
+#define AVERAGES2
 #ifdef SOLVE3D
-# undef AVERAGES_DETIDE
 # undef DIAGNOSTICS_TS
 #endif
 #undef DIAGNOSTICS_UV
@@ -132,10 +132,12 @@
 #  define LMD_RIMIX
 #  define LMD_CONVEC
 #  define LMD_SKPP
+#  define LI_FOX_KEMPER
 #  undef LMD_BKPP
 #  define LMD_NONLOCAL
 #  define LMD_SHAPIRO
 #  define LMD_DDMIX
+#  define LIMIT_VDIFF
 # endif
 
 # undef GLS_MIXING
@@ -218,4 +220,31 @@
 # define ANA_BTFLUX
 #else
 # define ANA_SMFLUX
+#endif
+
+/*
+**  Biological model options.
+*/
+#undef BIO_COBALT
+/* #define DEBUG_COBALT */
+/*#define COBALT_CONSERVATION_TEST */
+/*#define COBALT_NOSOURCE */
+/*#define COBALT_DO_NOTHING  */
+
+#if defined BIO_COBALT
+# undef FILTERED
+# define OPTIC_MANIZZA
+# define COBALT_MINERALS
+# undef COBALT_PHOSPHORUS
+# define COBALT_IRON
+# define NO_IRON_COAST
+# define COBALT_CARBON
+# define DIAGNOSTICS_BIO
+/*# define BENTHIC  */
+/*# define TIMESERIES */
+# undef ANA_ALK_DIC
+# undef ANA_BIOLOGY        /* analytical biology initial conditions */
+# define ANA_BPFLUX        /* analytical bottom passive tracers fluxes */
+# define ANA_SPFLUX        /* analytical surface passive tracers fluxes */
+# define COASTDIAT
 #endif

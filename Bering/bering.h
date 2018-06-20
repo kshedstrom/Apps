@@ -24,6 +24,7 @@
 #undef PARALLEL_IN
 #undef PARALLEL_OUT
 #define PERFECT_RESTART
+#define IMPLICIT_NUDGING
 
 /* general */
 

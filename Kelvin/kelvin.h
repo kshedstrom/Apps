@@ -30,3 +30,4 @@
 #define ANA_STFLUX
 #define ANA_SRFLUX
 #define ANA_BTFLUX
+#define IMPLICIT_NUDGING

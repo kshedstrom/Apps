@@ -32,6 +32,7 @@
 #undef FLOATS
 #undef STATIONS
 #define WET_DRY
+#define IMPLICIT_NUDGING
 
 /* ice */
 
