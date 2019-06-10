@@ -62,6 +62,7 @@
 !
       USE mod_param
       USE mod_scalars
+      USE dateclock_mod,   ONLY : caldate
 !
       USE exchange_2d_mod, ONLY : exchange_r2d_tile
 #ifdef DISTRIBUTE
@@ -102,8 +103,7 @@
       real(r8), parameter :: lr(12) =                                   &
      &      (/ 168., 166., 166., 187., 244., 291.,                      &
      &         309., 302., 267., 225., 181., 176.  /)
-      integer :: iday, month, year
-      real(r8) :: hour, yday
+      integer :: month
 
 #include "set_bounds.h"
 
@@ -117,7 +117,7 @@
 !  to be degC m/s.
 !-----------------------------------------------------------------------
 !
-      CALL caldate(r_date, tdays(ng), year, yday, month, iday, hour)
+      CALL caldate(tdays(ng), mm_i=month)
       DO j=JstrT,JendT
         DO i=IstrT,IendT
           lrflx(i,j) = lr(month)/(rho0*cp)

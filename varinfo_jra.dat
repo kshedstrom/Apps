@@ -2,7 +2,7 @@
 !  ROMS/TOMS IO NetCDF variables.
 !
 !========================================================= Hernan G. Arango ===
-!  Copyright (c) 2002-2017 The ROMS/TOMS Group                                !
+!  Copyright (c) 2002-2019 The ROMS/TOMS Group                                !
 !    Licensed under a MIT/X style license                                     !
 !    See License_ROMS.txt                                                     !
 !==============================================================================
@@ -750,8 +750,8 @@
 
 'fastice'                                          ! Input/Output
   'landfast ice extent'
-  '1'                                              ! 
-  'FastIce, scalar, series'                        ! 
+  '1'                                              !
+  'FastIce, scalar, series'                        !
   'ocean_time'                                     !
   'idFastIce'                                      !
   'r2dvar'
@@ -1855,78 +1855,6 @@
   'nulvar'
   1.0d0
 
-'apond_west'
-  'surface meltwater fraction western boundary condition'
-  ' '
-  'apond_west, scalar, series'
-  'bry_time'
-  'idApdbc(iwest)'
-  'nulvar'
-  1.0d0
-
-'apond_east'
-  'surface meltwater fraction eastern boundary condition'
-  ' '
-  'apond_east, scalar, series'
-  'bry_time'
-  'idApdbc(ieast)'
-  'nulvar'
-  1.0d0
-
-'apond_north'
-  'surface meltwater fraction northern boundary condition'
-  ' '
-  'apond_north, scalar, series'
-  'bry_time'
-  'idApdbc(inorth)'
-  'nulvar'
-  1.0d0
-
-'apond_south'
-  'surface meltwater fraction southern boundary condition'
-  ' '
-  'apond_south, scalar, series'
-  'bry_time'
-  'idApdbc(isouth)'
-  'nulvar'
-  1.0d0
-
-'hpond_west'
-  'surface meltwater thickness western boundary condition'
-  'meter'
-  'hpond_west, scalar, series'
-  'bry_time'
-  'idHpdbc(iwest)'
-  'nulvar'
-  1.0d0
-
-'hpond_east'
-  'surface meltwater thickness eastern boundary condition'
-  'meter'
-  'hpond_east, scalar, series'
-  'bry_time'
-  'idHpdbc(ieast)'
-  'nulvar'
-  1.0d0
-
-'hpond_north'
-  'surface meltwater thickness northern boundary condition'
-  'meter'
-  'hpond_north, scalar, series'
-  'bry_time'
-  'idHpdbc(inorth)'
-  'nulvar'
-  1.0d0
-
-'hpond_south'
-  'surface meltwater thickness southern boundary condition'
-  'meter'
-  'hpond_south, scalar, series'
-  'bry_time'
-  'idHpdbc(isouth)'
-  'nulvar'
-  1.0d0
-
 'sig11_west'
   'ice stress component 11 western boundary condition'
   'N meter-1'
@@ -2122,7 +2050,7 @@
   'r2dvar'
   0.01d0
 
-'tas_10m'                                          ! Input
+'tas'                                          ! Input
   'surface air temperature'
   'Celsius'                                        ! [Kelvin]
   'Tair, scalar, series'
@@ -2131,7 +2059,7 @@
   'r2dvar'
   1.0d0
 
-'huss_10m'                                         ! Input
+'huss'                                         ! Input
   'surface air relative humidity'
   'kg/kg'                                          ! [kg/kg]
   'Qair, scalar, series'
@@ -2203,7 +2131,7 @@
   'r2dvar'
   1.0d0
 
-'prrn'                                             ! Input
+'prra'                                             ! Input
   'rain fall rate'
   'kilogram meter-2 second-1'                      ! [kg m2/s]
   'rain, scalar, series'
@@ -2230,7 +2158,7 @@
   'r2dvar'
   1.0d0                                            ! 1/rhow (0.001 m3/kg) if m/s
 
-'uas_10m'                                          ! Input
+'uas'                                          ! Input
   'surface u-wind component'
   'meter second-1'                                 ! [m/s]
   'u-wind, scalar, series'
@@ -2239,7 +2167,7 @@
   'r2dvar'
   1.0d0
 
-'vas_10m'                                          ! Input
+'vas'                                          ! Input
   'surface v-wind component'
   'meter second-1'                                 ! [m/s]
   'v-wind, scalar, series'

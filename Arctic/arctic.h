@@ -65,6 +65,7 @@
 #  define SNOWFALL
 #  define OUTFLOW_MASK
 #  define ICE_LANDFAST
+#  define ICE_SHALLOW_LIMIT
 #  define ICE_THERMO
 #  define ICE_MK
 #  define ICE_MOMENTUM
@@ -78,6 +79,7 @@
 #  define ICE_CONVSNOW
 #  define ICE_I_O
 #  define ICE_DIAGS
+#  define CCSM_ICE_SHORTWAVE
 # endif
 #endif
 
@@ -203,9 +205,9 @@
 # define TIDES_ASTRO
 # define POT_TIDES
 
-# define UV_DRAG_GRID
-# define ANA_DRAG
 #endif
+#define UV_DRAG_GRID
+#define ANA_DRAG
 #define LIMIT_BSTRESS
 #define UV_QDRAG
 

@@ -62,6 +62,7 @@
 !
       USE mod_param
       USE mod_scalars
+      USE dateclock_mod,   ONLY : caldate
 !
       USE exchange_2d_mod, ONLY : exchange_r2d_tile
 #ifdef DISTRIBUTE
@@ -107,7 +108,7 @@
 # endif
 #endif
       real(r8) :: cff
-      integer :: iday, month, year
+      integer :: month, year
       real(r8) :: hour, yday
       real(r8), parameter :: sr(12) =                                   &
      &        (/ 0., 0., 30.7, 160., 286., 310.,                        &
@@ -144,7 +145,7 @@
 !
 !  Assume time is in modified Julian day.  Get hour and year day.
 !
-      CALL caldate (r_date, tdays(ng), year, yday, month, iday, hour)
+      CALL caldate(tdays(ng), yd_r8=yday, h_r8=hour)
 !
 !  Estimate solar declination angle (radians).
 !
@@ -241,7 +242,7 @@
 !  to be degC m/s.
 !-----------------------------------------------------------------------
 !
-      CALL caldate(r_date, tdays(ng), year, yday, month, iday, hour)
+      CALL caldate(tdays(ng), mm_i=month)
       cff=sr(month)/(rho0*cp)
       DO j=JstrT,JendT
         DO i=IstrT,IendT
