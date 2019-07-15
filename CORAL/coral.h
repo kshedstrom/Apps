@@ -30,6 +30,7 @@
 #undef FLOATS
 #define STATIONS
 #undef WET_DRY
+#define IMPLICIT_NUDGING
 
 /* output stuff */
 

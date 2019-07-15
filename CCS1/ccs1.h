@@ -11,7 +11,7 @@
 **
 **  Options for Northeast Pacific (NEP4) simulation
 */
- 
+
 /* general */
 
 #define CURVGRID
@@ -27,7 +27,8 @@
 #undef CCSM_COUPLED
 #define CORE_FORCING
 #define CCSM_FLUXES
- 
+#define IMPLICIT_NUDGING
+
 /* ice */
 
 #ifdef SOLVE3D
@@ -50,7 +51,7 @@
 #endif
 
 /* output stuff */
- 
+
 #define NO_WRITE_GRID
 #undef OUT_DOUBLE
 #define RST_SINGLE
@@ -60,22 +61,22 @@
 # undef DIAGNOSTICS_TS
 #endif
 #undef DIAGNOSTICS_UV
- 
+
 /* advection, dissipation, pressure grad, etc. */
- 
+
 #ifdef SOLVE3D
 # define DJ_GRADPS
 #endif
- 
+
 #define UV_ADV
 #define UV_COR
 #define UV_SADVECTION
- 
+
 #ifdef SOLVE3D
 # define TS_U3HADVECTION
 # define TS_SVADVECTION
 #endif
- 
+
 #define UV_VIS2
 #define MIX_S_UV
 #define VISC_GRID
@@ -86,15 +87,15 @@
 # define MIX_GEO_TS
 # define DIFF_GRID
 #endif
- 
+
 #define UV_QDRAG
 #define LIMIT_BSTRESS
- 
+
 /* vertical mixing */
- 
+
 #ifdef SOLVE3D
 # define SOLAR_SOURCE
- 
+
 # define LMD_MIXING
 # ifdef LMD_MIXING
 #  define LMD_RIMIX
@@ -105,13 +106,13 @@
 #  undef LMD_DDMIX
 #  undef LMD_BKPP
 # endif
- 
+
 # undef GLS_MIXING
 # undef MY25_MIXING
 #endif
- 
+
 /* surface forcing */
- 
+
 #ifdef SOLVE3D
 # define BULK_FLUXES
 # ifdef BULK_FLUXES
@@ -124,22 +125,22 @@
 #  undef LONGWAVE
 # endif
 #endif
- 
+
 /* surface and side corrections */
- 
+
 #ifdef SOLVE3D
 # undef SRELAXATION
 # undef QCORRECTION
 #endif
- 
+
 #ifdef SOLVE3D
 # define TCLIMATOLOGY
 # define TCLM_NUDGING
 # define ANA_TCLIMA
 #endif
- 
+
 /* tides */
- 
+
 #undef SSH_TIDES
 #undef UV_TIDES
 #undef ADD_FSOBC
@@ -147,13 +148,13 @@
 #undef RAMP_TIDES
 #undef TIDES_ASTRO
 #undef POT_TIDES
- 
+
 /* Boundary conditions...careful with grid orientation */
- 
+
 #define RADIATION_2D
- 
+
 /* roms quirks */
- 
+
 #ifdef SOLVE3D
 # define ANA_BSFLUX
 # define ANA_BTFLUX

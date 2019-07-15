@@ -49,6 +49,7 @@
 !
       USE mod_param
       USE mod_scalars
+      USE dateclock_mod,   ONLY : caldate
 !
       USE exchange_2d_mod, ONLY : exchange_r2d_tile
 #ifdef DISTRIBUTE
@@ -70,8 +71,7 @@
 !  Local variable declarations.
 !
       integer :: i, j
-      integer :: iday, month, year
-      real(r8) :: hour, yday
+      integer :: month
       real(r8), parameter :: temp_air(12) =                             &
      &   (/ -27., -25., -22., -15., -2., 0.,                            &
      &       1., -.5, -1., -2., -15., -27. /)
@@ -82,7 +82,7 @@
 !  Set analytical surface air temperature (degC).
 !-----------------------------------------------------------------------
 !
-      CALL caldate(r_date, tdays(ng), year, yday, month, iday, hour)
+      CALL caldate(tdays(ng), mm_i=month)
       DO j=JstrT,JendT
         DO i=IstrT,IendT
           Tair(i,j)=temp_air(month)

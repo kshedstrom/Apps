@@ -5,7 +5,6 @@
 !! Copyright (c) 2002-2017 The ROMS/TOMS Group                         !
 !!   Licensed under a MIT/X style license                              !
 !!   See License_ROMS.txt                                              !
-!!                                                                     !
 !=======================================================================
 !                                                                      !
 !  This subroutine sets initial conditions for momentum and tracer     !
@@ -25,24 +24,26 @@
 
 #include "tile.h"
 !
-      CALL ana_initial_tile (ng, tile, model,                           &
-     &                       LBi, UBi, LBj, UBj,                        &
-     &                       IminS, ImaxS, JminS, JmaxS,                &
-     &                       GRID(ng) % h,                              &
-     &                       GRID(ng) % xr,                             &
-     &                       GRID(ng) % yr,                             &
-     &                       GRID(ng) % xu,                             &
-     &                       GRID(ng) % yu,                             &
-     &                       GRID(ng) % xv,                             &
-     &                       GRID(ng) % yv,                             &
+      IF (model.eq.iNLM) THEN
+        CALL ana_NLMinitial_tile (ng, tile, model,                      &
+     &                            LBi, UBi, LBj, UBj,                   &
+     &                            IminS, ImaxS, JminS, JmaxS,           &
+     &                            GRID(ng) % h,                         &
+     &                            GRID(ng) % xr,                        &
+     &                            GRID(ng) % yr,                        &
+     &                            GRID(ng) % xu,                        &
+     &                            GRID(ng) % yu,                        &
+     &                            GRID(ng) % xv,                        &
+     &                            GRID(ng) % yv,                        &
 #ifdef MASKING
-     &                       GRID(ng) % umask,                          &
-     &                       GRID(ng) % vmask,                          &
-     &                       GRID(ng) % rmask,                          &
+     &                            GRID(ng) % umask,                     &
+     &                            GRID(ng) % vmask,                     &
+     &                            GRID(ng) % rmask,                     &
 #endif
-     &                       OCEAN(ng) % ubar,                          &
-     &                       OCEAN(ng) % vbar,                          &
-     &                       OCEAN(ng) % zeta)
+     &                            OCEAN(ng) % ubar,                     &
+     &                            OCEAN(ng) % vbar,                     &
+     &                            OCEAN(ng) % zeta)
+      END IF
 !
 ! Set analytical header file name used.
 !
@@ -58,20 +59,29 @@
       END SUBROUTINE ana_initial
 !
 !***********************************************************************
-      SUBROUTINE ana_initial_tile (ng, tile, model,                     &
-     &                             LBi, UBi, LBj, UBj,                  &
-     &                             IminS, ImaxS, JminS, JmaxS,          &
-     &                             h,                                   &
-     &                             xr, yr,                              &
-     &                             xu, yu, xv, yv,                      &
+      SUBROUTINE ana_NLMinitial_tile (ng, tile, model,                  &
+     &                                LBi, UBi, LBj, UBj,               &
+     &                                IminS, ImaxS, JminS, JmaxS,       &
+     &                                h,                                &
+     &                                xr, yr,                           &
+     &                                xu, yu, xv, yv,                   &
 #ifdef MASKING
-     &                             umask, vmask, rmask,                 &
+     &                                umask, vmask, rmask,              &
 #endif
-     &                             ubar, vbar, zeta)
+     &                                ubar, vbar, zeta)
 !***********************************************************************
 !
       USE mod_param
+      USE mod_parallel
+      USE mod_grid
+      USE mod_ncparam
+      USE mod_iounits
       USE mod_scalars
+!
+      USE stats_mod, ONLY : stats_2dfld
+#ifdef SOLVE3D
+      USE stats_mod, ONLY : stats_3dfld
+#endif
 !
 !  Imported variable declarations.
 !
@@ -115,12 +125,31 @@
 !
 !  Local variable declarations.
 !
+      logical, save :: first = .TRUE.
+
       integer :: Iless, Iplus, i, itrc, j, k, nu, NM
       real(r8) :: rad, f0, sigma, omega, grav, cu, bessi_c
       real(r8) :: theta, rad_tilde, Fx, Fy, kappa, Fxc, Fxs, Fyd
       real(r8) :: FF, vt, vr, depth, c0
 
+      TYPE (T_STATS), save :: Stats(7)   ! ubar, vbar, zeta, u, v, t, s
+
 #include "set_bounds.h"
+!
+!-----------------------------------------------------------------------
+!  Initialize field statistics structure.
+!-----------------------------------------------------------------------
+!
+      IF (first) THEN
+        first=.FALSE.
+        DO i=1,SIZE(Stats,1)
+          Stats(i) % count=0.0_r8
+          Stats(i) % min=Large
+          Stats(i) % max=-Large
+          Stats(i) % avg=0.0_r8
+          Stats(i) % rms=0.0_r8
+        END DO
+      END IF
 !
 !-----------------------------------------------------------------------
 !  Initial conditions for 2D momentum (m/s) components.
@@ -152,7 +181,7 @@
             FF = kappa*Fyd - nu/rad * Fy
             vt = c0*Fxc/(kappa**2*depth) * (f0*FF - sigma*nu*Fy/rad)
             vr = -c0*Fxs/(kappa**2*depth) * (sigma*FF - nu*f0*Fy/rad)
-   
+
             ubar(i,j,1) = vr*cos(theta) - vt*sin(theta)
           ELSE
             ubar(i,j,1) = 0.0
@@ -194,6 +223,23 @@
       END DO
 #endif
 !
+!  Report statistics.
+!
+      CALL stats_2dfld (ng, tile, iNLM, u2dvar, Stats(1),               &
+     &                  LBi, UBi, LBj, UBj, ubar(:,:,1))
+      IF (DOMAIN(ng)%NorthEast_Corner(tile)) THEN
+        WRITE (stdout,10) TRIM(Vname(2,idUbar))//': '//                 &
+     &                    TRIM(Vname(1,idUbar)),                        &
+     &                     ng, Stats(1)%min, Stats(1)%max
+      END IF
+      CALL stats_2dfld (ng, tile, iNLM, v2dvar, Stats(2),               &
+     &                  LBi, UBi, LBj, UBj, vbar(:,:,1))
+      IF (DOMAIN(ng)%NorthEast_Corner(tile)) THEN
+        WRITE (stdout,10) TRIM(Vname(2,idVbar))//': '//                 &
+     &                    TRIM(Vname(1,idVbar)),                        &
+     &                     ng, Stats(2)%min, Stats(2)%max
+      END IF
+!
 !-----------------------------------------------------------------------
 !  Initial conditions for free-surface (m).
 !-----------------------------------------------------------------------
@@ -220,6 +266,17 @@
         END DO
       END DO
 #endif
+!
+!  Report statistics.
+!
+      CALL stats_2dfld (ng, tile, iNLM, r2dvar, Stats(3),               &
+     &                  LBi, UBi, LBj, UBj, zeta(:,:,1))
+      IF (DOMAIN(ng)%NorthEast_Corner(tile)) THEN
+        WRITE (stdout,10) TRIM(Vname(2,idFsur))//': '//                 &
+     &                    TRIM(Vname(1,idFsur)),                        &
+     &                     ng, Stats(3)%min, Stats(3)%max
+      END IF
+
 
       RETURN
       END SUBROUTINE ana_initial_tile

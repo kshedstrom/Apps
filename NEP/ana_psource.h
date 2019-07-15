@@ -171,7 +171,7 @@
 !  Set tracer and/or mass point sources and/or sink.
 !-----------------------------------------------------------------------
 !
-      IF (iic(ng).eq.ntstart(ng)) THEN
+      IF (iic(ng).eq.ntstart(ng) .or. (iic(ng).eq.0)) THEN
 !
 !  Set-up point Sources/Sink number (Nsrc), direction (Dsrc), I- and
 !  J-grid locations (Isrc,Jsrc), and logical switch for type of tracer

@@ -2,7 +2,7 @@
 !  ROMS/TOMS IO NetCDF variables.
 !
 !========================================================= Hernan G. Arango ===
-!  Copyright (c) 2002-2013 The ROMS/TOMS Group                                !
+!  Copyright (c) 2002-2019 The ROMS/TOMS Group                                !
 !    Licensed under a MIT/X style license                                     !
 !    See License_ROMS.txt                                                     !
 !==============================================================================
@@ -168,6 +168,42 @@
   'r3dvar'
   1.0d0
 
+'u_sur'                                            ! Output
+  'model surface u-momentum component'
+  'meter second-1'                                 ! [m/s]
+  'u_sur, scalar, series'
+  'ocean_time'
+  'idUsur'
+  'u2dvar'
+  1.0d0
+
+'v_sur'                                            ! Output
+  'model surface v-momentum component'
+  'meter second-1'                                 ! [m/s]
+  'v_sur, scalar, series'
+  'ocean_time'
+  'idVsur'
+  'v2dvar'
+  1.0d0
+
+'u_sur_eastward'                                   ! Output
+  'model surface eastward momentum component at RHO-points'
+  'meter second-1'                                 ! [m/s]
+  'u_sur_eastward, scalar, series'
+  'ocean_time'
+  'idUsuE'
+  'r2dvar'
+  1.0d0
+
+'v_sur_northward'                                  ! Output
+  'model surface northward momentum component at RHO-points'
+  'meter second-1'                                 ! [m/s]
+  'v_sur_northward, scalar, series'
+  'ocean_time'
+  'idVsuN'
+  'r2dvar'
+  1.0d0
+
 'w'                                                ! Output
   'vertical momentum component'
   'meter second-1'                                 ! [m/s]
@@ -222,45 +258,22 @@
   'r3dvar'
   1.0d0
 
-!
-!------------------------------------------------------------------------------
-!  Wet/dry masks.
-!------------------------------------------------------------------------------
-!
-'wetdry_mask_psi'                                  ! Input/Output
-  'wet/dry mask on PSI-points'
-  'nondimensional'
-  'wetdry_mask_psi, scalar, series'
+'temp_sur'                                         ! Output
+  'model surface potential temperature'
+  'Celsius'                                        ! [Celsius]
+  'temp_sur, scalar, series'
   'ocean_time'
-  'idPwet'
-  'p2dvar'
-  1.0d0
-
-'wetdry_mask_rho'                                  ! Input/Output
-  'wet/dry mask on RHO-points'
-  'nondimensional'
-  'wetdry_mask_rho, scalar, series'
-  'ocean_time'
-  'idRwet'
+  'idsurT(itemp)'
   'r2dvar'
   1.0d0
 
-'wetdry_mask_u'                                    ! Input/Output
-  'wet/dry mask on U-points'
-  'nondimensional'
-  'wetdry_mask_u, scalar, series'
+'salt_sur'                                         ! Output
+  'model surface salinity'
+  'nondimensional'                                 ! [PSU]
+  'salinity, scalar, series'
   'ocean_time'
-  'idUwet'
-  'u2dvar'
-  1.0d0
-
-'wetdry_mask_v'                                    ! Input/Output
-  'wet/dry mask on V-points'
-  'nondimensional'
-  'wetdry_mask_v, scalar, series'
-  'ocean_time'
-  'idVwet'
-  'v2dvar'
+  'idsurT(isalt)'
+  'r2dvar'
   1.0d0
 
 'z_rho'                                            ! Output
@@ -304,6 +317,47 @@
 !  Wet/dry masks.
 !------------------------------------------------------------------------------
 !
+
+!
+!------------------------------------------------------------------------------
+!  Wet/dry masks.
+!------------------------------------------------------------------------------
+!
+'wetdry_mask_psi'                                  ! Input/Output
+  'wet/dry mask on PSI-points'
+  'nondimensional'
+  'wetdry_mask_psi, scalar, series'
+  'ocean_time'
+  'idPwet'
+  'p2dvar'
+  1.0d0
+
+'wetdry_mask_rho'                                  ! Input/Output
+  'wet/dry mask on RHO-points'
+  'nondimensional'
+  'wetdry_mask_rho, scalar, series'
+  'ocean_time'
+  'idRwet'
+  'r2dvar'
+  1.0d0
+
+'wetdry_mask_u'                                    ! Input/Output
+  'wet/dry mask on U-points'
+  'nondimensional'
+  'wetdry_mask_u, scalar, series'
+  'ocean_time'
+  'idUwet'
+  'u2dvar'
+  1.0d0
+
+'wetdry_mask_v'                                    ! Input/Output
+  'wet/dry mask on V-points'
+  'nondimensional'
+  'wetdry_mask_v, scalar, series'
+  'ocean_time'
+  'idVwet'
+  'v2dvar'
+  1.0d0
 
 'wetdry_mask_rho'                                  ! Input/Output
   'wet/dry mask on RHO-points'
@@ -720,8 +774,8 @@
 
 'fastice'                                          ! Input/Output
   'landfast ice extent'
-  '1'                                              ! 
-  'FastIce, scalar, series'                        ! 
+  '1'                                              !
+  'FastIce, scalar, series'                        !
   'ocean_time'                                     !
   'idFastIce'                                      !
   'r2dvar'
@@ -743,7 +797,7 @@
   'bwf_time'
   'idTbot(isalt)'
   'r2dvar'
-  1.157407d-7                                     ! 0.01/86400
+  1.157407d-7                                      ! 0.01/86400
 
 !
 !------------------------------------------------------------------------------
@@ -877,6 +931,15 @@
   'r2dvar'
   1.0d0
 
+'snow_thick'
+  'thickness of snow cover'
+  'meter'
+  'snow thickness, scalar, series'
+  'ocean_time'
+  'idHSNclm'
+  'r2dvar'
+  1.0d0
+
 'tisrf'
   'temperature of ice surface'
   'degrees Celcius'
@@ -892,6 +955,15 @@
   'interior temperature, scalar, series'
   'ocean_time'
   'idTimid'
+  'r2dvar'
+  1.0d0
+
+'t2'
+  'top of ice temperature'
+  'degrees Celcius'
+  'top of ice temperature, scalar, series'
+  'ocean_time'
+  'idT2ice'
   'r2dvar'
   1.0d0
 
@@ -1003,15 +1075,6 @@
   'r2dvar'
   1.0d0
 
-'sfwat'
-  'surface melt water thickness on ice'
-  'meter'
-  'melt water thickness, scalar, series'
-  'ocean_time'
-  'idSfwat'
-  'r2dvar'
-  1.0d0
-
 'iomflx'
   'ice-ocean mass flux'
   'meter second-1'
@@ -1054,6 +1117,177 @@
   'ice stress 12, scalar, series'
   'ocean_time'
   'idSig12'
+  'r2dvar'
+  1.0d0
+
+'sig11'
+  'internal ice stress 11 component'
+  'Newton meter-1'
+  'ice stress 11, scalar, series'
+  'ocean_time'
+  'idS11clm'
+  'r2dvar'
+  1.0d0
+
+'sig22'
+  'internal ice stress 22 component'
+  'Newton meter-1'
+  'ice stress 22, scalar, series'
+  'ocean_time'
+  'idS22clm'
+  'r2dvar'
+  1.0d0
+
+'sig12'
+  'internal ice stress 12 component'
+  'Newton meter-1'
+  'ice stress 12, scalar, series'
+  'ocean_time'
+  'idS12clm'
+  'r2dvar'
+  1.0d0
+
+'albedo_ice'
+  'ice albedo'
+  'fraction'
+  'ice albedo, scalar, series'
+  'ocean_time'
+  'idAlbI'
+  'r2dvar'
+  1.0d0
+
+'LW_down'
+  'downward longwave radiation'
+  'W m-2'
+  'LW_down, scalar, series'
+  'ocean_time'
+  'idLWdn'
+  'r2dvar'
+  1.0d0
+
+'SW_down'
+  'downward shortwave radiation'
+  'W m-2'
+  'SW_down, scalar, series'
+  'ocean_time'
+  'idSWdn'
+  'r2dvar'
+  1.0d0
+
+'lat_ice'
+  'latent heat flux over ice'
+  'W m-2'
+  'lat_ice, scalar, series'
+  'ocean_time'
+  'idLatI'
+  'r2dvar'
+  1.0d0
+
+'sens_ice'
+  'sensible heat flux over ice'
+  'W m-2'
+  'sens_ice, scalar, series'
+  'ocean_time'
+  'idSenI'
+  'r2dvar'
+  1.0d0
+
+'LW_up_ice'
+  'upward longwave radiation over ice'
+  'W m-2'
+  'LW_up_ice, scalar, series'
+  'ocean_time'
+  'idLWupI'
+  'r2dvar'
+  1.0d0
+
+'SW_up_ice'
+  'upward shortwave radiation over ice'
+  'W m-2'
+  'SW_up_ice, scalar, series'
+  'ocean_time'
+  'idSWupI'
+  'r2dvar'
+  1.0d0
+
+'SW_in_ice'
+  'shortwave radiation into ice'
+  'W m-2'
+  'SW_in_ice, scalar, series'
+  'ocean_time'
+  'idSWinI'
+  'r2dvar'
+  1.0d0
+
+'SW_thru_ice'
+  'shortwave radiation through ice'
+  'W m-2'
+  'SW_thru_ice, scalar, series'
+  'ocean_time'
+  'idSWthruI'
+  'r2dvar'
+  1.0d0
+
+'saltflux_ice'
+  'salt flux under ice'
+  'meter second-1'                                 ! [PSU m/s]
+  'saltflux_ice, scalar, series'
+  'ocean_time'
+  'idSaltI'
+  'r2dvar'
+  1.0d0
+
+'saltflux_leads'
+  'salt flux in leads'
+  'meter second-1'                                 ! [PSU m/s]
+  'saltflux_leads, scalar, series'
+  'ocean_time'
+  'idSaltL'
+  'r2dvar'
+  1.0d0
+
+'qao'
+  'air-ocean heat flux'
+  'W m-2'
+  'qao, scalar, series'
+  'ocean_time'
+  'idQao'
+  'r2dvar'
+  1.0d0
+
+'qai'
+  'ice-air heat flux'
+  'W m-2'
+  'qai, scalar, series'
+  'ocean_time'
+  'idQai'
+  'r2dvar'
+  1.0d0
+
+'qio'
+  'ice-ocean heat flux'
+  'W m-2'
+  'qio, scalar, series'
+  'ocean_time'
+  'idQio'
+  'r2dvar'
+  1.0d0
+
+'qi2'
+  'ice heat flux'
+  'W m-2'
+  'qi2, scalar, series'
+  'ocean_time'
+  'idQi2'
+  'r2dvar'
+  1.0d0
+
+'snoice'
+  'snow-ice conversion'
+  'm s-1'
+  'snoice, scalar, series'
+  'ocean_time'
+  'idSnoI'
   'r2dvar'
   1.0d0
 
@@ -1645,42 +1879,6 @@
   'nulvar'
   1.0d0
 
-'sfwat_west'
-  'surface meltwater thickness western boundary condition'
-  'meter'
-  'sfwat_west, scalar, series'
-  'bry_time'
-  'idSfwbc(iwest)'
-  'nulvar'
-  1.0d0
-
-'sfwat_east'
-  'surface meltwater thickness eastern boundary condition'
-  'meter'
-  'sfwat_east, scalar, series'
-  'bry_time'
-  'idSfwbc(ieast)'
-  'nulvar'
-  1.0d0
-
-'sfwat_north'
-  'surface meltwater thickness northern boundary condition'
-  'meter'
-  'sfwat_north, scalar, series'
-  'bry_time'
-  'idSfwbc(inorth)'
-  'nulvar'
-  1.0d0
-
-'sfwat_south'
-  'surface meltwater thickness southern boundary condition'
-  'meter'
-  'sfwat_south, scalar, series'
-  'bry_time'
-  'idSfwbc(isouth)'
-  'nulvar'
-  1.0d0
-
 'sig11_west'
   'ice stress component 11 western boundary condition'
   'N meter-1'
@@ -2011,6 +2209,15 @@
   'r2dvar'
   1.0d0                                            ! 1/rhow (0.001 m3/kg) if m/s
 
+'snow'                                             ! Input
+  'snow fall rate'
+  'kilogram meter-2 second-1'                      ! [kg m2/s]
+  'snow, scalar, series'
+  'snow_time'
+  'idsnow'
+  'r2dvar'
+  1.0d0                                            ! 1/rhow (0.001 m3/kg) if m/s
+
 'evaporation'                                      ! Input
   'evaporation rate'
   'kilogram meter-2 second-1'                      ! [kg m2/s]
@@ -2084,7 +2291,7 @@
   1.0
 
 'Pwave_top'                                        ! Input
-  'wind-induced surface wave Period'
+  'wind-induced peak surface wave Period'
   'second'                                         ! [s]
   'Pwave_top, scalar, series'
   'wave_time'
@@ -2676,24 +2883,6 @@
   'sst_time'
   'idSSTc'
   'r2dvar'
-  1.0d0
-
-'temp'                                             ! Input
-  'potential temperature climatology'
-  'Celsius'                                        ! [Celsius]
-  'temp, scalar, series'
-  'ocean_time'
-  'idTclm(itemp)'
-  'r3dvar'
-  1.0d0
-
-'salt'                                             ! Input
-  'salinity climatology'
-  'nondimensional'                                 ! [PSU]
-  'salt, scalar, series'
-  'ocean_time'
-  'idTclm(isalt)'
-  'r3dvar'
   1.0d0
 
 !
@@ -3381,6 +3570,15 @@
   'rdrag2, scalar, series'
   'ocean_time'
   'idragQ'
+  'r2dvar'
+  1.0d0
+
+'wavedrag'                                         ! Input/Output
+  'linear bottom drag coefficient'
+  'meter second-1'                                 ! [m/s]
+  'wavedrag, scalar, series'
+  'ocean_time'
+  'idragW'
   'r2dvar'
   1.0d0
 
@@ -4356,72 +4554,72 @@
 
 ! Diagnostic variables for Cobalt
 
-'cased'                                      
+'cased'
   'Sediment CaCO3'
-  'mol.m-3' 
+  'mol.m-3'
   'cased, scalar, series'
   'ocean_time'
   'iDbio2(icased)'
   'r2dvar'
   1.0d0
 
-'cadet_arag_btf'                                      
+'cadet_arag_btf'
   'aragonite flux to Sediments'
-  'mol m-2 s-1' 
+  'mol m-2 s-1'
   'cadet_arag_btf, scalar, series'
   'ocean_time'
   'iDbio2(icadet_arag_btf)'
   'r2dvar'
   1.0d0
 
-'cadet_calc_btf'                                      
+'cadet_calc_btf'
   'calcite flux to Sediments'
-  'mol m-2 s-1' 
+  'mol m-2 s-1'
   'cadet_calc_btf, scalar, series'
   'ocean_time'
   'iDbio2(icadet_calc_btf)'
   'r2dvar'
   1.0d0
 
-'ndet_btf'                                      
+'ndet_btf'
   'N flux to Sediments'
-  'mol m-2 s-1' 
+  'mol m-2 s-1'
   'ndet_btf, scalar, series'
   'ocean_time'
   'iDbio2(indet_btf)'
   'r2dvar'
   1.0d0
 
-'pdet_btf'                                      
+'pdet_btf'
   'P flux to Sediments'
-  'mol m-2 s-1' 
+  'mol m-2 s-1'
   'pdet_btf, scalar, series'
   'ocean_time'
   'iDbio2(ipdet_btf)'
   'r2dvar'
   1.0d0
 
-'sidet_btf'                                      
+'sidet_btf'
   'SiO2 flux to Sediments'
-  'mol m-2 s-1' 
+  'mol m-2 s-1'
   'sidet_btf, scalar, series'
   'ocean_time'
   'iDbio2(isidet_btf)'
   'r2dvar'
   1.0d0
 
-'mxl_depth'                                      
+'mxl_depth'
   'depth of the mixed layer hsbl'
-  'm' 
+  'm'
   'mxl_depth, scalar, series'
   'ocean_time'
   'iDbio2(imxl_depth)'
   'r2dvar'
   1.0d0
 
-'mxl_level'                                      
+'mxl_level'
   'level of the mixed layer hsbl'
-  'm' 
+  'm'
   'mxl_level, scalar, series'
   'ocean_time'
   'iDbio2(imxl_level)'
@@ -4590,54 +4788,54 @@
   'r2dvar'
   1.0d0
 
-'chl'                                      
+'chl'
   'Chlorophyll'
-  'ug kg-1' 
+  'ug kg-1'
   'chl, scalar, series'
   'ocean_time'
   'iDbio3(ichl)'
   'r3dvar'
   1.0d0
 
-'co3_ion'                                      
+'co3_ion'
   'Carbonate ion'
-  'mol/kg' 
+  'mol/kg'
   'co3_ion, scalar, series'
   'ocean_time'
   'iDbio3(ico3_ion)'
   'r3dvar'
   1.0d0
 
-'htotal'                                      
+'htotal'
   'H+ ion concentration'
-  'mol/kg' 
+  'mol/kg'
   'htotal, scalar, series'
   'ocean_time'
   'iDbio3(ihtotal)'
   'r3dvar'
   1.0d0
 
-'irr_mem'                                      
+'irr_mem'
   'Irradiance memory'
-  'Watts/m^2' 
+  'Watts/m^2'
   'irr_mem, scalar, series'
   'ocean_time'
   'iDbio3(iirr_mem)'
   'r3dvar'
   1.0d0
 
-'irr_mix'                                      
+'irr_mix'
   'Irradiance in mixed layer'
-  'Watts/m^2' 
+  'Watts/m^2'
   'irr_mix, scalar, series'
   'ocean_time'
   'iDbio3(iirr_mix)'
   'r3dvar'
   1.0d0
 
-'irr_inst'                                      
+'irr_inst'
   'Irradiance instantaneous'
-  'Watts/m^2' 
+  'Watts/m^2'
   'irr_inst, scalar, series'
   'ocean_time'
   'iDbio3(iirr_inst)'
@@ -4646,7 +4844,7 @@
 
 'jprod_cadet_arag'
   'production term for cadet_arag'
-  'N/A' 
+  'N/A'
   'jprod_cadet_arag, scalar, series'
   'ocean_time'
   'iDbio3(ijprod_cadet_arag)'
@@ -4655,7 +4853,7 @@
 
 'jprod_cadet_calc'
   'production term for cadet_calc'
-  'N/A' 
+  'N/A'
   'jprod_cadet_calc, scalar, series'
   'ocean_time'
   'iDbio3(ijprod_cadet_calc)'
@@ -4664,7 +4862,7 @@
 
 'jprod_fedet'
   'production term for fedet'
-  'N/A' 
+  'N/A'
   'jprod_fedet, scalar, series'
   'ocean_time'
   'iDbio3(ijprod_fedet)'
@@ -4673,7 +4871,7 @@
 
 'jprod_lithdet'
   'production term for lithdet'
-  'N/A' 
+  'N/A'
   'jprod_lithdet, scalar, series'
   'ocean_time'
   'iDbio3(ijprod_lithdet)'
@@ -4682,7 +4880,7 @@
 
 'jprod_ndet'
   'production term for ndet'
-  'N/A' 
+  'N/A'
   'jprod_ndet, scalar, series'
   'ocean_time'
   'iDbio3(ijprod_ndet)'
@@ -4691,7 +4889,7 @@
 
 'jprod_pdet'
   'production term for pdet'
-  'N/A' 
+  'N/A'
   'jprod_pdet, scalar, series'
   'ocean_time'
   'iDbio3(ijprod_pdet)'
@@ -4700,7 +4898,7 @@
 
 'jprod_sidet'
   'production term for sidet'
-  'N/A' 
+  'N/A'
   'jprod_sidet, scalar, series'
   'ocean_time'
   'iDbio3(ijprod_sidet)'
@@ -4808,7 +5006,7 @@
 
 'ndet_b4sink'
   'ndet before sinking is applied'
-  'N/A' 
+  'N/A'
   'ndet_b4sink, scalar, series'
   'ocean_time'
   'iDbio3(indet_b4sink)'
@@ -4817,7 +5015,7 @@
 
 'pdet_b4sink'
   'pdet before sinking is applied'
-  'N/A' 
+  'N/A'
   'pdet_b4sink, scalar, series'
   'ocean_time'
   'iDbio3(ipdet_b4sink)'
@@ -4826,7 +5024,7 @@
 
 'fedet_b4sink'
   'fedet before sinking is applied'
-  'N/A' 
+  'N/A'
   'fedet_b4sink, scalar, series'
   'ocean_time'
   'iDbio3(ifedet_b4sink)'

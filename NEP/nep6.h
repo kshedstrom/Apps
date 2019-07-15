@@ -32,6 +32,7 @@
 #undef FLOATS
 #undef STATIONS
 #undef WET_DRY
+#define IMPLICIT_NUDGING
 
 #undef T_PASSIVE
 #ifdef T_PASSIVE
@@ -203,7 +204,7 @@
 
 #ifdef SOLVE3D
 /* Monthly average SODA is used to nudge solution in boundary bufferzone
-   These data enter through the climatology arrays 
+   These data enter through the climatology arrays
    Bufferzone characteristics must be set with mods to
    set_nudgcof.F */
 # define  M3CLIMATOLOGY

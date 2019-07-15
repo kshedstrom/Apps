@@ -58,6 +58,7 @@
 !
       USE mod_param
       USE mod_scalars
+      USE dateclock_mod,   ONLY : caldate
 !
       USE exchange_2d_mod, ONLY : exchange_r2d_tile
 #ifdef DISTRIBUTE
@@ -79,8 +80,7 @@
 !  Local variable declarations.
 !
       integer :: i, j
-      integer :: iday, month, year
-      real(r8) :: hour, yday
+      integer :: month
       real(r8), parameter :: humid(12) =                                &
      &           (/ .0004, .0005, .0005, .001, .0025, .0035,            &
      &              .004, .005, .0035, .002, .0015, .0005 /)
@@ -91,7 +91,7 @@
 !  Set analytical surface air humidity.
 !-----------------------------------------------------------------------
 !
-      CALL caldate(r_date, tdays(ng), year, yday, month, iday, hour)
+      CALL caldate(tdays(ng), mm_i=month)
       DO j=JstrT,JendT
         DO i=IstrT,IendT
           Hair(i,j)=humid(month)

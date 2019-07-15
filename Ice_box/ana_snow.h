@@ -50,6 +50,7 @@
 !
       USE mod_param
       USE mod_scalars
+      USE dateclock_mod,   ONLY : caldate
 !
       USE exchange_2d_mod, ONLY : exchange_r2d_tile
 #ifdef DISTRIBUTE
@@ -73,8 +74,7 @@
 !  Local variable declarations.
 !
       integer :: i, j
-      integer :: iday, month, year
-      real(r8) :: hour, yday
+      integer :: iday, month
       real(r8), parameter :: sn(12) =                                   &
      &        (/ 1.1e-6, 1.1e-6, 1.1e-6, 1.1e-6, 6.4e-6, 0.,            &
      &           0., 0., 1.64e-5, 1.64e-5, 1.1e-6, 1.1e-6    /)
@@ -97,7 +97,7 @@
         END DO
       END DO
 #else
-      CALL caldate(r_date, tdays(ng), year, yday, month, iday, hour)
+      CALL caldate(tdays(ng), mm_i=month, dd_i=iday)
       IF (month == 8 .and. iday >= 20) month = 9
       DO j=JstrT,JendT
         DO i=IstrT,IendT

@@ -3,7 +3,7 @@
 !
 !svn $Id$
 !========================================================= Hernan G. Arango ===
-!  Copyright (c) 2002-2017 The ROMS/TOMS Group                                !
+!  Copyright (c) 2002-2019 The ROMS/TOMS Group                                !
 !    Licensed under a MIT/X style license                                     !
 !    See License_ROMS.txt                                                     !
 !==============================================================================
@@ -68,12 +68,12 @@
 
 ! C-preprocessing Flag.
 
-    MyAppCPP = ARCTIC2
+    MyAppCPP = ARCTIC4
 
 ! Input variable information file name.  This file needs to be processed
 ! first so all information arrays can be initialized properly.
 
-     VARNAME = /center/w/kate/Arctic2/External/varinfo_jra.dat
+     VARNAME = /center1/AKWATERS/kshedstrom/Arctic/External/varinfo.dat.cobalt
 
 ! Number of nested grids.
 
@@ -106,11 +106,11 @@ GridsInLayer =  1
 ! shared-memory configurations used to determine tile horizontal range
 ! indices (Istr,Iend) and (Jstr,Jend), [1:Ngrids].
 
-       NtileI == 4                               ! I-direction partition
-!      NtileI == 6                               ! I-direction partition
+!      NtileI == 4                               ! I-direction partition
+       NtileI == 6                               ! I-direction partition
 ! ORDER MATTERS HERE!
-!      NtileJ == 32                              ! J-direction partition
-       NtileJ == 24                              ! J-direction partition
+       NtileJ == 32                              ! J-direction partition
+!      NtileJ == 24                              ! J-direction partition
 
 ! PIO number of I/O tasks
 
@@ -213,11 +213,10 @@ ad_VolCons(north) ==  F                            ! northern boundary
 
 ! Time-Stepping parameters.
 
-!      NTIMES == 432000
-       NTIMES == 86400
-          DT == 100.0d0
-!         DT == 80.0d0
-!         DT == 75.0d0
+!      NTIMES == 216000
+       NTIMES == 1080
+!      NTIMES == 388800
+          DT == 80.0d0
 !         DT == 60.0d0
      NDTFAST == 20
 
@@ -240,16 +239,10 @@ ad_VolCons(north) ==  F                            ! northern boundary
 
        NRREC == 0
    LcycleRST == T
-        NRST == 8640
-        NSTA == 36
-        NFLT == 36
-!       NRST == 5400
-!       NSTA == 45
-!       NFLT == 45
-!       NRST == 11520
-!       NSTA == 48
-!       NFLT == 48
-!       NRST == 14400
+        NRST == 5400
+        NSTA == 45
+        NFLT == 45
+!       NRST == 7200
 !       NSTA == 60
 !       NFLT == 60
        NINFO == 1
@@ -263,31 +256,21 @@ ad_VolCons(north) ==  F                            ! northern boundary
 !    NDEFHIS == 36
 !       NHIS == 45
 !    NDEFHIS == 45
-!       NHIS == 60
-!    NDEFHIS == 60
-!       NHIS == 80
-!    NDEFHIS == 80
       NTSAVG == 1
-        NAVG == 864
-     NDEFAVG == 864
-!       NAVG == 1080
-!    NDEFAVG == 1080
-!       NAVG == 1152
-!    NDEFAVG == 1152
+        NAVG == 1080
+     NDEFAVG == 1080
 !       NAVG == 1440
 !    NDEFAVG == 1440
      NTSAVG2 == 1
-       NAVG2 == 36000000000000
-    NDEFAVG2 == 864000000000000
-!      NAVG2 == 45
-!   NDEFAVG2 == 1080
-!      NAVG2 == 48
-!   NDEFAVG2 == 1152
-!      NAVG2 == 60
+       NAVG2 == 135
+    NDEFAVG2 == 1080
+!      NAVG2 == 180
 !   NDEFAVG2 == 1440
       NTSDIA == 1
-        NDIA == 10
-     NDEFDIA == 0
+        NDIA == 1080
+     NDEFDIA == 1080
+!       NDIA == 1440
+!    NDEFDIA == 1440
 
 ! Output tangent linear and adjoint models parameters.
 
@@ -412,11 +395,11 @@ LtracerSponge == F F                            ! temperature, salinity, inert
          Zos == 0.02d0                     ! m
 
 ! Height (m) of atmospheric measurements for Bulk fluxes parameterization.
-! 2 for MERRA
+! 2 for MERRA, 10 for JRA
 
-      BLK_ZQ == 2.0d0                     ! air humidity
-      BLK_ZT == 2.0d0                     ! air temperature
-      BLK_ZW == 2.0d0                     ! winds
+      BLK_ZQ == 10.0d0                     ! air humidity
+      BLK_ZT == 10.0d0                     ! air temperature
+      BLK_ZW == 10.0d0                     ! winds
 
 ! Minimum depth for wetting and drying.
 
@@ -449,13 +432,8 @@ LtracerSponge == F F                            ! temperature, salinity, inert
 ! origin for tidal forcing, and model reference time for output
 ! NetCDF units attribute.
 
-!      DSTART =  35796.5d0                  ! days (1998)
-!      DSTART =  28856.5d0                  ! days (1979)
-!      DSTART =  32876.5d0                  ! days (1990)
-!      DSTART =  37987.5d0                  ! days (2004)
-!      DSTART =  38351.5d0                  ! days (2005)
-      DSTART =  40446.5d0                  ! days (end Sept 2010)
-!      DSTART =  40907.0d0                  ! days (2012)
+      DSTART =  29226.5d0                  ! days (1980)
+!     DSTART =  40907.0d0                  ! days (2012)
   TIDE_START =  -1.0d0                     ! days
     TIME_REF =  19000101.0d0               ! yyyymmdd.dd
 
@@ -499,15 +477,14 @@ LtracerSponge == F F                            ! temperature, salinity, inert
 ! point Sources/Sinks (like river runoff transport) and mass point
 ! Sources/Sinks (like volume vertical influx), [1:Ngrids].
 
-      LuvSrc == F                          ! horizontal momentum transport
+      LuvSrc == T                          ! horizontal momentum transport
        LwSrc == F                          ! volume vertical influx
 
 ! Logical switches (TRUE/FALSE) to activate tracers point Sources/Sinks
 ! (like river runoff) and to specify which tracer variables to consider:
 ! [1:NAT+NPT,Ngrids].  See glossary below for details.
 
-  LtracerSrc == F F F F F F F F            ! temperature, salinity, inert
-!  LtracerSrc == T T                        ! temperature, salinity, inert
+  LtracerSrc == T T                        ! temperature, salinity, inert
 
 ! Logical switches (TRUE/FALSE) to read and process climatology fields.
 ! See glossary below for details.
@@ -516,8 +493,7 @@ LtracerSponge == F F                            ! temperature, salinity, inert
       Lm2CLM == T                          ! 2D momentum
       Lm3CLM == T                          ! 3D momentum
 
-  LtracerCLM == T T F F F F F F            ! temperature, salinity, inert
-!  LtracerCLM == T T                        ! temperature, salinity, inert
+  LtracerCLM == T T                        ! temperature, salinity, inert
 
 ! Logical switches (TRUE/FALSE) to nudge the desired climatology field(s).
 ! If not analytical climatology fields, users need to turn ON the logical
@@ -559,6 +535,7 @@ Lstate(isUbar) == F                        ! 2D U-momentum
 Lstate(isVbar) == F                        ! 2D V-momentum
 Lstate(isUvel) == F                        ! 3D U-momentum
 Lstate(isVvel) == F                        ! 3D V-momentum
+Lstate(isWvel) == F                        ! 3D W-momentum
 
 Lstate(isTvar) == F F                      ! NT tracers
 
@@ -667,14 +644,14 @@ Hout(idVair) == F       ! Vair               surface V-wind component
 Hout(idUairE) == F      ! Uwind_eastward     surface U-wind
 Hout(idVairN) == F      ! Vwind_northward    surface V-wind
 
-Hout(idTsur) == T T     ! shflux, ssflux     surface net heat and salt flux
-Hout(idLhea) == T       ! latent             latent heat flux
-Hout(idShea) == T       ! sensible           sensible heat flux
-Hout(idLrad) == T       ! lwrad              longwave radiation flux
-Hout(idSrad) == T       ! swrad              shortwave radiation flux
-Hout(idEmPf) == T       ! EminusP            E-P flux
-Hout(idevap) == T       ! evaporation        evaporation rate
-Hout(idrain) == T       ! rain               precipitation rate
+Hout(idTsur) == F F     ! shflux, ssflux     surface net heat and salt flux
+Hout(idLhea) == F       ! latent             latent heat flux
+Hout(idShea) == F       ! sensible           sensible heat flux
+Hout(idLrad) == F       ! lwrad              longwave radiation flux
+Hout(idSrad) == F       ! swrad              shortwave radiation flux
+Hout(idEmPf) == F       ! EminusP            E-P flux
+Hout(idevap) == F       ! evaporation        evaporation rate
+Hout(idrain) == F       ! rain               precipitation rate
 
 Hout(idDano) == F       ! rho                density anomaly
 Hout(idVvis) == F       ! AKv                vertical viscosity
@@ -801,33 +778,45 @@ Qout(idMtls) == F       ! gls                turbulent length scale
 ! Logical switches (TRUE/FALSE) to activate writing of fields into
 ! secondary Averages output file.
 
-Aout2(idUvel) == T       ! u                  3D U-velocity
-Aout2(idVvel) == T       ! v                  3D V-velocity
+Aout2(idUvel) == F       ! u                  3D U-velocity
+Aout2(idVvel) == F       ! v                  3D V-velocity
 Aout2(idu3dE) == T       ! u_eastward         3D U-eastward  at RHO-points
 Aout2(idv3dN) == T       ! v_northward        3D V-northward at RHO-points
-Aout2(idUbar) == T       ! ubar               2D U-velocity
-Aout2(idVbar) == T       ! vbar               2D V-velocity
+Aout2(idUbar) == F       ! ubar               2D U-velocity
+Aout2(idVbar) == F       ! vbar               2D V-velocity
 Aout2(idu2dE) == T       ! ubar_eastward      2D U-eastward  at RHO-points
 Aout2(idv2dN) == T       ! vbar_northward     2D V-northward at RHO-points
 Aout2(idFsur) == T       ! zeta               free-surface
 
 Aout2(idTvar) == T T     ! temp, salt         temperature and salinity
 
-Aout2(idUair) == T                          ! surface U-wind
-Aout2(idVair) == T                          ! surface V-wind
-Aout2(idUairE) == T      ! Uwind_eastward     surface U-wind
-Aout2(idVairN) == T      ! Vwind_northward    surface V-wind
 Aout2(idUsms) == T       ! sustr              surface U-stress
 Aout2(idVsms) == T       ! svstr              surface V-stress
+Aout2(idUbms) == F       ! bustr              bottom U-stress
+Aout2(idVbms) == F       ! bvstr              bottom V-stress
 
-Aout2(idTsur) == T T     ! shflux, ssflux     surface net heat and salt flux
-Aout2(idLhea) == T       ! latent             latent heat flux
-Aout2(idShea) == T       ! sensible           sensible heat flux
-Aout2(idLrad) == T       ! lwrad              longwave radiation flux
-Aout2(idSrad) == T       ! swrad              shortwave radiation flux
-Aout2(idEmPf) == F       ! EminusP            E-P flux
+Aout2(idPair) == T       ! Pair               surface air pressure
+Aout2(idUair) == F       ! Uair               surface U-wind component
+Aout2(idVair) == F       ! Vair               surface V-wind component
+Aout2(idUairE) == T      ! Uwind_eastward     surface U-wind
+Aout2(idVairN) == T      ! Vwind_northward    surface V-wind
+
+Aout2(idTsur) == F F     ! shflux, ssflux     surface net heat and salt flux
+Aout2(idLhea) == F       ! latent             latent heat flux
+Aout2(idShea) == F       ! sensible           sensible heat flux
+Aout2(idLrad) == F       ! lwrad              longwave radiation flux
+Aout2(idSrad) == F       ! swrad              shortwave radiation flux
 Aout2(idevap) == F       ! evaporation        evaporation rate
 Aout2(idrain) == F       ! rain               precipitation rate
+
+Aout2(idDano) == F       ! rho                density anomaly
+Aout2(idHsbl) == F       ! Hsbl               depth of surface boundary layer
+Aout2(idHbbl) == F       ! Hbbl               depth of bottom boundary layer
+
+Aout2(id2dPV) == F       ! pvorticity_bar     2D potential vorticity
+Aout2(id3dPV) == F       ! pvorticity         3D potential vorticity
+Aout2(id2dRV) == F       ! rvorticity_bar     2D relative vorticity
+Aout2(id3dRV) == F       ! rvorticity         3D relative vorticity
 
 ! Logical switches (TRUE/FALSE) to activate writing of extra inert passive
 ! tracers other than biological and sediment tracers. An inert passive tracer
@@ -841,14 +830,14 @@ Aout2(inert) == F       ! dye_01, ...        inert passive tracers
 ! Logical switches (TRUE/FALSE) to activate writing of time-averaged
 ! fields into AVERAGE output file.
 
-Aout(idUvel) == F       ! u                  3D U-velocity
-Aout(idVvel) == F       ! v                  3D V-velocity
+Aout(idUvel) == T       ! u                  3D U-velocity
+Aout(idVvel) == T       ! v                  3D V-velocity
 Aout(idu3dE) == T       ! u_eastward         3D U-eastward  at RHO-points
 Aout(idv3dN) == T       ! v_northward        3D V-northward at RHO-points
 Aout(idWvel) == T       ! w                  3D W-velocity
 Aout(idOvel) == T       ! omega              omega vertical velocity
-Aout(idUbar) == F       ! ubar               2D U-velocity
-Aout(idVbar) == F       ! vbar               2D V-velocity
+Aout(idUbar) == T       ! ubar               2D U-velocity
+Aout(idVbar) == T       ! vbar               2D V-velocity
 Aout(idu2dE) == T       ! ubar_eastward      2D U-eastward  at RHO-points
 Aout(idv2dN) == T       ! vbar_northward     2D V-northward at RHO-points
 Aout(idFsur) == T       ! zeta               free-surface
@@ -857,8 +846,8 @@ Aout(idTvar) == T T     ! temp, salt         temperature and salinity
 
 Aout(idUsms) == T       ! sustr              surface U-stress
 Aout(idVsms) == T       ! svstr              surface V-stress
-Aout(idUbms) == T       ! bustr              bottom U-stress
-Aout(idVbms) == T       ! bvstr              bottom V-stress
+Aout(idUbms) == F       ! bustr              bottom U-stress
+Aout(idVbms) == F       ! bvstr              bottom V-stress
 
 Aout(idW2xx) == F       ! Sxx_bar            2D radiation stress, Sxx component
 Aout(idW2xy) == F       ! Sxy_bar            2D radiation stress, Sxy component
@@ -899,10 +888,10 @@ Aout(idSdif) == F       ! AKs                vertical Salinity diffusion
 Aout(idHsbl) == T       ! Hsbl               depth of surface boundary layer
 Aout(idHbbl) == F       ! Hbbl               depth of bottom boundary layer
 
-Aout(id2dRV) == F       ! pvorticity_bar     2D relative vorticity
-Aout(id3dRV) == F       ! pvorticity         3D relative vorticity
-Aout(id2dPV) == F       ! rvorticity_bar     2D potential vorticity
-Aout(id3dPV) == F       ! rvorticity         3D potential vorticity
+Aout(id2dPV) == F       ! pvorticity_bar     2D potential vorticity
+Aout(id3dPV) == F       ! pvorticity         3D potential vorticity
+Aout(id2dRV) == T       ! rvorticity_bar     2D relative vorticity
+Aout(id3dRV) == T       ! rvorticity         3D relative vorticity
 
 Aout(idu3dD) == F       ! u_detided          detided 3D U-velocity
 Aout(idv3dD) == F       ! v_detided          detided 3D V-velocity
@@ -993,9 +982,9 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 
 ! Input NetCDF file names, [1:Ngrids].
 
-     GRDNAME == /center/w/kate/Arctic2/Files/grid_Arctic_4.nc
-     ININAME == /center/w/kate/Arctic2/Files/ARCTIC4_IC_2010_09_27_SODA3.3.1.nc
-!    ININAME == arctic4_rst.nc
+     GRDNAME == /center1/AKWATERS/kshedstrom/Arctic/Files/grid_Arctic_4.nc
+     ININAME == /center1/AKWATERS/kshedstrom/Arctic/Files/ARCTIC4_IC_1980_01_08_SODA3.3.1.nc
+!    ININAME == arctic4_foo.nc
      ITLNAME == ocean_itl.nc
      IRPNAME == ocean_irp.nc
      IADNAME == ocean_iad.nc
@@ -1015,12 +1004,14 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 ! except the last one.
 
    NCLMFILES == 1                         ! number of climate files
-     CLMNAME == /center/w/kate/Arctic2/Files/Arctic4_clm_2010_SODA3.3.1.nc |
-                /center/w/kate/Arctic2/Files/Arctic4_clm_2011_SODA3.3.1.nc
+     CLMNAME == /center1/AKWATERS/kshedstrom/Arctic/Files/Arctic4_clm_1980_SODA3.3.1.nc |
+                /center1/AKWATERS/kshedstrom/Arctic/Files/Arctic4_clm_1981_SODA3.3.1.nc |
+                /center1/AKWATERS/kshedstrom/Arctic/Files/Arctic4_clm_1982_SODA3.3.1.nc
 
     NBCFILES == 1                          ! number of boundary files
-     BRYNAME == /center/w/kate/Arctic2/Files/Arctic4_bdry_2010_SODA3.3.1.nc |
-                /center/w/kate/Arctic2/Files/Arctic4_bdry_2011_SODA3.3.1.nc
+     BRYNAME == /center1/AKWATERS/kshedstrom/Arctic/Files/Arctic4_bdry_1980_SODA3.3.1.nc |
+                /center1/AKWATERS/kshedstrom/Arctic/Files/Arctic4_bdry_1981_SODA3.3.1.nc |
+                /center1/AKWATERS/kshedstrom/Arctic/Files/Arctic4_bdry_1982_SODA3.3.1.nc
 
 ! Input climatology nudging coefficients file name.
 
@@ -1028,11 +1019,15 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 
 ! Input Sources/Sinks forcing (like river runoff) file name.
 
-     SSFNAME == /center/w/kate/Arctic2/Files/Arctic2_rivers.nc
+    NSSFFILES == 2                          ! number of boundary files
+     SSFNAME == /center1/AKWATERS/kshedstrom/Arctic/Files/JRA-1.4_Arctic_rivers_1980.nc |
+                /center1/AKWATERS/kshedstrom/Arctic/Files/JRA-1.4_Arctic_rivers_1981.nc |
+                /center1/AKWATERS/kshedstrom/Arctic/Files/JRA-1.4_Arctic_rivers_1982.nc \
+                /center1/AKWATERS/kshedstrom/Arctic/Files/river_tracers_big.nc
 
 ! Input tidal forcing file name.
 
-    TIDENAME == /center/w/kate/Arctic2/Files/Arctic2_tides_otps.nc
+    TIDENAME == /center1/AKWATERS/kshedstrom/Arctic/Files/Arctic2_tides_otps.nc
 
 ! Input forcing NetCDF file name(s).
 !
@@ -1052,31 +1047,38 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 ! continuation (\) or a vertical bar (|) symbol after each entry, except
 ! the last one.
 
-    NFFILES == 11                          ! number of forcing files
+    NFFILES == 10                          ! number of forcing files
 
-    FRCNAME == /center/d/kate/JRA55-raw/slp.2010.30Jun2016.nc   |
-               /center/d/kate/JRA55-raw/slp.2011.30Jun2016.nc   \
-               /center/d/kate/JRA55-raw/q_10.2010.30Jun2016.nc   |
-               /center/d/kate/JRA55-raw/q_10.2011.30Jun2016.nc   \
-               /center/d/kate/JRA55-raw/t_10.2010.30Jun2016.nc   |
-               /center/d/kate/JRA55-raw/t_10.2011.30Jun2016.nc   \
-               /center/d/kate/JRA55-raw/rain.2010.15Dec2016.nc   |
-               /center/d/kate/JRA55-raw/rain.2011.15Dec2016.nc   \
-               /center/d/kate/JRA55-raw/snow.2010.15Dec2016.nc   |
-               /center/d/kate/JRA55-raw/snow.2011.15Dec2016.nc   \
-               /center/d/kate/JRA55-raw/rsds.2010.30Jun2016.nc  |
-               /center/d/kate/JRA55-raw/rsds.2011.30Jun2016.nc  \
-               /center/d/kate/JRA55-raw/rlds.2010.30Jun2016.nc  |
-               /center/d/kate/JRA55-raw/rlds.2011.30Jun2016.nc  \
-               /center/d/kate/JRA55-raw/u_10.2010.30Jun2016.nc  |
-               /center/d/kate/JRA55-raw/u_10.2011.30Jun2016.nc  \
-               /center/d/kate/JRA55-raw/v_10.2010.30Jun2016.nc  |
-               /center/d/kate/JRA55-raw/v_10.2011.30Jun2016.nc  \
-               /center/d/kate/JRA55-raw/runoff_all.2010.15Dec2016.nc   |
-               /center/d/kate/JRA55-raw/runoff_all.2011.15Dec2016.nc   \
-               /center/w/kate/CORE2/sss_fill_2004.nc
+    FRCNAME == /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Pair_1980.nc   |
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Pair_1981.nc   |
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Pair_1982.nc   \
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Qair_1980.nc   |
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Qair_1981.nc   |
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Qair_1982.nc   \
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Tair_1980.nc   |
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Tair_1981.nc   |
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Tair_1982.nc   \
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_rain_1980.nc   |
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_rain_1981.nc   |
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_rain_1982.nc   \
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_snow_1980.nc   |
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_snow_1981.nc   |
+               /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_snow_1982.nc   \
+              /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_swrad_1980.nc   |
+              /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_swrad_1981.nc   |
+              /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_swrad_1982.nc   \
+         /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_lwrad_down_1980.nc   |
+         /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_lwrad_down_1981.nc   |
+         /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_lwrad_down_1982.nc   \
+              /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Uwind_1980.nc   |
+              /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Uwind_1981.nc   |
+              /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Uwind_1982.nc   \
+              /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Vwind_1980.nc   |
+              /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Vwind_1981.nc   |
+              /center1/AKWATERS/kate/JRA55-do/JRA55DO_1.4_Vwind_1982.nc   \
+              /center1/AKWATERS/kshedstrom/CORE2/sss_fill_2004.nc
 
-!               /center/w/kate/Arctic2/Files/runoff_ARCTIC2_daitren_southern_1978-2007.nc \
+!              /center1/AKWATERS/kshedstrom/Arctic/Files/runoff_ARCTIC4_daitren_southern_clim.nc \
 ! Output NetCDF file names, [1:Ngrids].
 
      DAINAME == arctic4_dai.nc
@@ -1097,10 +1099,10 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 ! Input ASCII parameter filenames.
 
      APARNAM =  External/assimilation.in
-     SPOSNAM =  /center/w/kate/Arctic2/External/stations_arctic.in
-     FPOSNAM =  /center/w/kate/Arctic2/External/floats_arctic.in
-     IPARNAM =  /center/w/kate/Arctic2/External/ice.in
-     BPARNAM =  /center/w/kate/Arctic2/External/nemuro_iron.in
+     SPOSNAM =  /center1/AKWATERS/kshedstrom/Arctic/External/stations_arctic.in
+     FPOSNAM =  /center1/AKWATERS/kshedstrom/Arctic/External/floats_arctic.in
+     IPARNAM =  /center1/AKWATERS/kshedstrom/Arctic/External/ice.in
+     BPARNAM =  /center1/AKWATERS/kshedstrom/Arctic/External/bio_Cobalt.in.full.CoastalDiat_NVO.afterFLO
      SPARNAM =  External/sediment.in
      USRNAME =  External/MyFile.dat
 
@@ -1456,7 +1458,7 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 !                saved every NRST timesteps without recycling.  The restart
 !                fields are written at all levels in double precision.
 !
-! NRST         Number of timesteps between the writing of re-start fields.
+! NRST         Number of timesteps between the writing of restart fields.
 !                Set NRST=0 to suppress writing of RESTART file.
 !
 ! NSTA         Number of timesteps between writing data into STATIONS file.
@@ -1997,7 +1999,19 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 !                      0 <  theta_s <= 10.0
 !                      0 <= theta_b <=  4.0
 !
-!              Many other stretching functions (Vstretching>4) are possible
+!                 (5) Souza et al. (2015) quadratic Legendre polynomial function
+!                     that allows higher resolution near the surface,
+!                     Vstretching=5. It is similar to Vstretching=4, but the
+!                     fractional stretched vertical coordinate (s) is re-defined
+!                     as:
+!
+!                       s(k)=- [(k*k - 2*k*N + k + N*N - N) / (N*N - N)]
+!                            - weight * [(k*k - k*N) / (1 - N)]
+!
+!                     at vertical W-points, k=0,...,N and weight=0.01. To get
+!                     the equation at vertical RHO-points, replace k with k-0.5.
+!
+!              Many other stretching functions (Vstretching>5) are possible
 !              provided that:
 !
 !                * C(s) is a dimensionless, nonlinear, monotonic function.
@@ -2049,8 +2063,9 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 !                a Calendar linear coordinate, like modified Julian Day.  For
 !                Example:
 !
-!                         Julian Day = 1  for  Nov 25, 0:0:0 4713 BCE
-!                modified Julian Day = 1  for  May 24, 0:0:0 1968  CE GMT
+!                         Julian Day    = 1      for  Nov 25, 00:00:00 4713 BCE
+!                modified Julian Day    = 1      for  May 24, 00:00:00 1968 GMT
+!                Days since Jan 1, 2000 = 988.5  for  Sep 15, 12:00:00 2002
 !
 !                It is called truncated or modified Julian day because an
 !                offset of 2440000 needs to be added.
@@ -2069,24 +2084,24 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 !                If TIME_REF = -2, model time and DSTART are in modified Julian
 !                days units.  The "units" attribute is:
 !
-!                      'time-units since 1968-05-23 00:00:00 GMT'
+!                  'time-units since 1968-05-23 00:00:00 GMT'    (May 23, 1968)
 !
 !                If TIME_REF = -1, model time and DSTART are in a calendar
 !                with 360 days in every year (30 days each month).  The "units"
 !                attribute is:
 !
-!                      'time-units since 0001-01-01 00:00:00'
+!                  'time-units since 0000-12-30 00:00:00'        (Dec 30, 0000)
 !
 !                If TIME_REF = 0, model time and DSTART are in a common year
 !                calendar with 365.25 days.  The "units" attribute is:
 !
-!                      'time-units since 0001-01-01 00:00:00'
+!                  'time-units since 0001-01-01 00:00:00'        (Jan  1, 0001)
 !
 !                If TIME_REF > 0, model time and DSTART are the elapsed time
 !                units since specified reference time.  For example,
 !                TIME_REF=20020115.5 will yield the following attribute:
 !
-!                      'time-units since 2002-01-15 12:00:00'
+!                  'time-units since 2002-01-15 12:00:00'        (Jan 15, 2002)
 !
 !------------------------------------------------------------------------------
 ! Nudging/relaxation time scales, inverse scales will be computed internally.
@@ -2366,6 +2381,7 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 !                Lstate(isVbar):   2D V-momentum
 !                Lstate(isUvel):   3D U-momentum
 !                Lstate(isVvel):   3D V-momentum
+!                Lstate(isWvel):   3D W-momentum
 !                Lstate(isTvar):   Traces (NT values expected)
 !
 !------------------------------------------------------------------------------
