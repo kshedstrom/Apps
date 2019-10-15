@@ -2,7 +2,7 @@
 !
 !! svn $Id$
 !!======================================================================
-!! Copyright (c) 2002-2017 The ROMS/TOMS Group                         !
+!! Copyright (c) 2002-2019 The ROMS/TOMS Group                         !
 !!   Licensed under a MIT/X style license                              !
 !!   See License_ROMS.txt                                              !
 !=======================================================================
@@ -62,8 +62,8 @@
 !
       USE mod_param
       USE mod_scalars
-      USE dateclock_mod,   ONLY : caldate
 !
+      USE dateclock_mod,   ONLY : caldate
       USE exchange_2d_mod, ONLY : exchange_r2d_tile
 #ifdef DISTRIBUTE
       USE mp_exchange_mod, ONLY : mp_exchange2d
@@ -103,7 +103,7 @@
 #if defined ALBEDO_CLOUD || defined DIURNAL_SRFLUX
       real(r8) :: Dangle, Hangle, LatRad
       real(r8) :: cff1, cff2
-# ifdef ALBEDO_CLOUD
+# ifdef ALBEDO
       real(r8) :: Rsolar, e_sat, vap_p, zenith
 # endif
 #endif

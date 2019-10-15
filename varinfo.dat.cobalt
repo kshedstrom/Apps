@@ -1291,6 +1291,24 @@
   'r2dvar'
   1.0d0
 
+'frswpen'
+  'shortwave penetration into ice'
+  'm s-1'
+  'frswpen, scalar, series'
+  'ocean_time'
+  'idfrswp'
+  'r2dvar'
+  1.0d0
+
+'rfaci'
+  'reduction factor for near-IR fraction of SW under ice'
+  'm s-1'
+  'rfaci, scalar, series'
+  'ocean_time'
+  'idrfaci'
+  'r2dvar'
+  1.0d0
+
 'Runoff'
   'Fresh water runoff from land'
   'kg/s/m^2'
