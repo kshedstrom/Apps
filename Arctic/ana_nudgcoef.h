@@ -110,7 +110,7 @@
       END DO
 
 !
-!  Set nudging boundaries coefficients zone for ARCTIC2 
+!  Set nudging boundaries coefficients zone for ARCTIC2
 !  nudging coefficients vary from a thirty
 !  days time scale at the boundary point to decrease linearly to 0 days
 !  (i.e no nudging) 15 grids points away from the boundary.
@@ -149,6 +149,14 @@
 !
 ! Set the relevant nudging coefficients using the entries in wrk
 !
+      IF (LnudgeM2CLM(ng)) THEN
+        DO j=JstrT,JendT
+          DO i=IstrT,IendT
+            CLIMA(ng)%M2nudgcof(i,j)=wrk(i,j)
+          END DO
+        END DO
+      END IF
+#ifdef SOLVE3D
       IF (ANY(LnudgeTCLM(:,ng))) THEN
         DO itrc=1,NTCLM(ng)
           DO k=1,N(ng)
@@ -157,13 +165,6 @@
                 CLIMA(ng)%Tnudgcof(i,j,k,itrc)=wrk(i,j)
               END DO
             END DO
-          END DO
-        END DO
-      END IF
-      IF (LnudgeM2CLM(ng)) THEN
-        DO j=JstrT,JendT
-          DO i=IstrT,IendT
-            CLIMA(ng)%M2nudgcof(i,j)=wrk(i,j)
           END DO
         END DO
       END IF
@@ -176,6 +177,7 @@
           END DO
         END DO
       END IF
+#endif
 
 #ifdef DISTRIBUTE
 !

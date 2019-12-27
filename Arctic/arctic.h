@@ -25,10 +25,10 @@
 
 #define CURVGRID
 #define MASKING
-#define NONLIN_EOS
 #define SOLVE3D
-#define SALINITY
 #ifdef SOLVE3D
+# define SALINITY
+# define NONLIN_EOS
 # undef SPLINES_VDIFF
 # undef SPLINES_VVISC
 # define RI_SPLINES
@@ -92,8 +92,8 @@
 # define RST_SINGLE
 #endif
 #define AVERAGES
-#define AVERAGES2
 #ifdef SOLVE3D
+# undef AVERAGES2
 # undef DIAGNOSTICS_TS
 #endif
 #undef DIAGNOSTICS_UV
@@ -106,12 +106,6 @@
 
 #define UV_ADV
 #define UV_COR
-
-#ifdef SOLVE3D
-# undef TS_U3HADVECTION
-# undef TS_C4VADVECTION
-# define TS_MPDATA
-#endif
 
 #define UV_VIS2
 #undef UV_SMAGORINSKY
@@ -168,6 +162,8 @@
 #  undef ICE_ALB_EC92   /* for ice */
 #  define ALBEDO_CSIM   /* for ice */
 #  undef ALBEDO_FILE    /* for both */
+#  undef ALBEDO_DIRDIFF
+#  define ICE_SHORTWAVE_R
 #  undef LONGWAVE
 # endif
 #endif
@@ -181,6 +177,9 @@
 #endif
 
 #ifdef SOLVE3D
+# define ANA_NUDGCOEF
+#else
+# define ANA_INITIAL
 # define ANA_NUDGCOEF
 #endif
 
@@ -205,8 +204,8 @@
 # undef RAMP_TIDES
 # define TIDES_ASTRO
 # define POT_TIDES
-
 #endif
+
 #define UV_DRAG_GRID
 #define ANA_DRAG
 #define LIMIT_BSTRESS
@@ -228,7 +227,18 @@
 /*
 **  Biological model options.
 */
-#undef BIO_COBALT
+#ifdef SOLVE3D
+# define BIO_COBALT
+#endif
+
+#ifdef BIO_COBALT
+# undef TS_MPDATA
+# define TS_HSIMT
+#elif defined SOLVE3D
+# define TS_U3HADVECTION
+# define TS_C4VADVECTION
+#endif
+
 /* #define DEBUG_COBALT */
 /*#define COBALT_CONSERVATION_TEST */
 /*#define COBALT_NOSOURCE */
