@@ -12,6 +12,7 @@
 **  Options for ARCTIC simulation
 */
 
+#define ROMS_MODEL
 #define NO_HIS
 #define GLOBAL_PERIODIC
 #define HDF5
@@ -107,9 +108,9 @@
 #define UV_COR
 
 #ifdef SOLVE3D
-# define TS_U3HADVECTION
-# define TS_C4VADVECTION
-# undef TS_MPDATA
+# undef TS_U3HADVECTION
+# undef TS_C4VADVECTION
+# define TS_MPDATA
 #endif
 
 #define UV_VIS2
@@ -235,6 +236,7 @@
 
 #if defined BIO_COBALT
 # undef FILTERED
+# undef AVERAGES2
 # define OPTIC_MANIZZA
 # define COBALT_MINERALS
 # undef COBALT_PHOSPHORUS
