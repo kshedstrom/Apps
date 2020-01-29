@@ -62,9 +62,6 @@
 # define TS_DIF2
 # define MIX_GEO_TS              /* mixing on geopotential surfaces for horizontal mixing of tracers */
 # define DIFF_GRID               /* scale diffusion coefficients by grid size for horizontal mixing of tracers */
-# define TS_U3HADVECTION         /* 3rd-order upstream biased advection */
-# define TS_C4VADVECTION         /* 4th-order center vert advection instead */
-# undef TS_MPDATA
 #endif
 
 

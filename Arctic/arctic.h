@@ -107,12 +107,6 @@
 #define UV_ADV
 #define UV_COR
 
-#ifdef SOLVE3D
-# undef TS_U3HADVECTION
-# undef TS_C4VADVECTION
-# define TS_MPDATA
-#endif
-
 #define UV_VIS2
 #undef UV_SMAGORINSKY
 #undef VISC_3DCOEF
