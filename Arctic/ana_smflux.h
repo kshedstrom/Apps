@@ -141,7 +141,8 @@
 !-----------------------------------------------------------------------
 !
       wind_min = 0.0_r8
-      wind_max = 1.4e-4_r8
+      wind_max = 0.0_r8
+!     wind_max = 1.4e-4_r8
 !     wind_max = 1.4e-4_r8 / sqrt(2.0)
       my_tdays = tdays(ng) - 41706.5
       if (my_tdays < 5.0) then
