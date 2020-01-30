@@ -66,11 +66,6 @@
 #define UV_COR
 #define UV_SADVECTION
  
-#ifdef SOLVE3D
-# define TS_U3HADVECTION
-# define TS_SVADVECTION
-#endif
- 
 #define UV_VIS2
 #define MIX_S_UV
 #define VISC_GRID

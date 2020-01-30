@@ -96,12 +96,6 @@
 #define UV_COR
 #undef UV_SADVECTION
 
-#ifdef SOLVE3D
-# define TS_U3HADVECTION
-# define TS_C4VADVECTION
-# undef TS_MPDATA
-#endif
-
 #define UV_VIS2
 #undef UV_WAVEDRAG
 #undef UV_SMAGORINSKY

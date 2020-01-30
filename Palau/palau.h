@@ -74,12 +74,6 @@
 #undef UV_SADVECTION
 #undef UV_C4ADVECTION
 
-#ifdef SOLVE3D
-# define TS_U3HADVECTION
-# define TS_C4VADVECTION
-# undef TS_MPDATA
-#endif
-
 #define UV_VIS2
 #undef UV_SMAGORINSKY
 #define VISC_3DCOEF

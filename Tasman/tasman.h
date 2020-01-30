@@ -65,9 +65,6 @@
 # define MIX_S_UV
 # define VISC_GRID
 # define SPONGE
-# define TS_U3HADVECTION
-# define TS_C4VADVECTION
-# undef TS_MPDATA
 #endif
 
 
