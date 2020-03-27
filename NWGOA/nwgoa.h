@@ -12,7 +12,7 @@
 **  Options for NWGOA simulation
 */
 
-#undef NO_HIS
+#define NO_HIS
 #define HDF5
 #define DEFLATE
 #define PERFECT_RESTART
@@ -21,16 +21,16 @@
 
 #define CURVGRID
 #define MASKING
-#define NONLIN_EOS
 #define SOLVE3D
-#define SALINITY
 #ifdef SOLVE3D
-# define SPLINES_VDIFF
-# define SPLINES_VVISC
+# define SALINITY
+# define NONLIN_EOS
+# undef SPLINES_VDIFF
+# undef SPLINES_VVISC
 # define RI_SPLINES
 #endif
-#define FLOATS
-#define STATIONS
+#undef FLOATS
+#undef STATIONS
 #define WET_DRY
 #define IMPLICIT_NUDGING
 
@@ -51,18 +51,22 @@
 # ifdef ICE_MODEL
 #  define ANA_ICE
 #  undef  OUTFLOW_MASK
+#  define SNOWFALL
 #  undef  FASTICE_CLIMATOLOGY
-#  define  ICE_THERMO
-#  define  ICE_MK
-#  define  ICE_MOMENTUM
-#  define  ICE_MOM_BULK
-#  define  ICE_EVP
-#  define  ICE_STRENGTH_QUAD
-#  define  ICE_ADVECT
-#  define  ICE_SMOLAR
-#  define  ICE_UPWIND
-#  define  ICE_BULK_FLUXES
-#  define  ICE_I_O
+#  define ICE_SHALLOW_LIMIT
+#  define ICE_THERMO
+#  define ICE_MK
+#  define ICE_MOMENTUM
+#  define ICE_MOM_BULK
+#  define ICE_EVP
+#  define ICE_STRENGTH_QUAD
+#  define ICE_ADVECT
+#  define ICE_SMOLAR
+#  define ICE_UPWIND
+#  define ICE_BULK_FLUXES
+#  define ICE_I_O
+#  define ICE_CONVSNOW
+#  define CCSM_ICE_SHORTWAVE
 # endif
 #endif
 
@@ -88,6 +92,13 @@
 
 #define UV_ADV
 #define UV_COR
+
+#ifdef SOLVE3D
+# undef TS_A4HADVECTION
+# define TS_U3HADVECTION
+# define TS_C4VADVECTION
+# undef TS_MPDATA
+#endif
 
 #define UV_VIS2
 #undef UV_SMAGORINSKY
@@ -145,9 +156,9 @@
 #  undef ANA_SRFLUX
 #  undef ALBEDO_CLOUD
 #  define ALBEDO_CURVE  /* for water */
-#  define ICE_ALB_EC92  /* for ice */
-#  undef ALBEDO_CSIM   /* for ice */
-#  undef ALBEDO_FILE  /* for both */
+#  undef ICE_ALB_EC92   /* for ice */
+#  define ALBEDO_CSIM   /* for ice */
+#  undef ALBEDO_FILE    /* for both */
 #  undef LONGWAVE
 # endif
 # define SCORRECTION
@@ -167,7 +178,7 @@
 
 /* Not using Runoff now */
 #ifdef SOLVE3D
-# define RUNOFF
+# undef RUNOFF
 # define ONE_TRACER_SOURCE
 #endif
 

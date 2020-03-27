@@ -12,62 +12,38 @@
 **  Options for ARCTIC simulation
 */
 
-#define ROMS_MODEL
 #undef NO_HIS
-#define GLOBAL_PERIODIC
+#undef GLOBAL_PERIODIC
 #define HDF5
 #define DEFLATE
-#undef PARALLEL_IN
-#undef PARALLEL_OUT
+#undef PARALLEL_IO
 #define PERFECT_RESTART
+#undef NO_LBC_ATT
 
 /* general */
 
-#define MASK_HACK
 #define CURVGRID
 #define MASKING
+#define NONLIN_EOS
 #define SOLVE3D
+#define SALINITY
 #ifdef SOLVE3D
-# define SALINITY
-# define NONLIN_EOS
 # undef SPLINES_VDIFF
 # undef SPLINES_VVISC
 # define RI_SPLINES
 #endif
 #undef FLOATS
-#define STATIONS
+#undef STATIONS
 #define WET_DRY
 #define IMPLICIT_NUDGING
-
-#undef T_PASSIVE
-#ifdef T_PASSIVE
-# define ANA_BPFLUX        /* analytical bottom passive tracers fluxes */
-# define ANA_SPFLUX
-# define ANA_PASSIVE
-# define TRC_PSOURCE
-# define ANA_TRC_PSOURCE
-# define AGE_MEAN
-#endif
 
 /* ice */
 
 #ifdef SOLVE3D
-# undef CICE_MODEL
-# ifdef CICE_MODEL
-#  define SNOWFALL
-#  undef SNOW_FROM_RAIN
-#  define INI_GLORYS_ICE
-#  undef ICE_LOG_LAYER
-# endif
-
-# undef  ICE_MODEL
+# define  ICE_MODEL
 # ifdef ICE_MODEL
-#  define ANA_ICE
-#  define INI_GLORYS_ICE
-#  define SNOWFALL
-#  define OUTFLOW_MASK
+#  undef  OUTFLOW_MASK
 #  define ICE_LANDFAST
-#  define ICE_SHALLOW_LIMIT
 #  define ICE_THERMO
 #  define ICE_MK
 #  define ICE_MOMENTUM
@@ -81,7 +57,6 @@
 #  define ICE_CONVSNOW
 #  define ICE_I_O
 #  define ICE_DIAGS
-#  define CCSM_ICE_SHORTWAVE
 # endif
 #endif
 
@@ -92,13 +67,13 @@
 #ifndef PERFECT_RESTART
 # define RST_SINGLE
 #endif
-#undef AVERAGES
+#define AVERAGES
+#define AVERAGES2
 #ifdef SOLVE3D
-# undef AVERAGES2
+# undef AVERAGES_DETIDE
 # undef DIAGNOSTICS_TS
-#else
-# define DIAGNOSTICS_UV
 #endif
+#undef DIAGNOSTICS_UV
 
 /* advection, dissipation, pressure grad, etc. */
 
@@ -108,6 +83,7 @@
 
 #define UV_ADV
 #define UV_COR
+#undef UV_SADVECTION
 
 #define UV_VIS2
 #undef UV_SMAGORINSKY
@@ -131,12 +107,10 @@
 #  define LMD_RIMIX
 #  define LMD_CONVEC
 #  define LMD_SKPP
-#  undef LI_FOX_KEMPER
-#  undef LMD_BKPP
+#  define LMD_BKPP
 #  define LMD_NONLOCAL
 #  define LMD_SHAPIRO
 #  define LMD_DDMIX
-#  define LIMIT_VDIFF
 # endif
 
 # undef GLS_MIXING
@@ -151,12 +125,11 @@
 /* surface forcing */
 
 #ifdef SOLVE3D
-# undef CORE_FORCING
-# undef BULK_FLUXES
-# undef CCSM_FLUXES
+# define CORE_FORCING
+# define BULK_FLUXES
+# define CCSM_FLUXES
 # if defined BULK_FLUXES || defined CCSM_FLUXES
 #  define LONGWAVE_OUT
-#  undef DIURNAL_SRFLUX
 #  define SOLAR_SOURCE
 #  define EMINUSP
 #  undef ALBEDO_CLOUD
@@ -164,8 +137,6 @@
 #  undef ICE_ALB_EC92   /* for ice */
 #  define ALBEDO_CSIM   /* for ice */
 #  undef ALBEDO_FILE    /* for both */
-#  undef ALBEDO_DIRDIFF
-#  define ICE_SHORTWAVE_R
 #  undef LONGWAVE
 # endif
 #endif
@@ -180,23 +151,19 @@
 
 #ifdef SOLVE3D
 # define ANA_NUDGCOEF
-#else
-# define ANA_INITIAL
-# define ANA_NUDGCOEF
 #endif
 
 /* point sources (rivers, line sources) */
 
+/* Using both for different regions */
 #ifdef SOLVE3D
 # undef RUNOFF
-# define TWO_D_TRACER_SOURCE
+# define ONE_D_TRACER_SOURCE
 #endif
 
 /* tides */
 
-#ifdef SOLVE3D
-# undef LTIDES
-#endif
+#define LTIDES
 #ifdef LTIDES
 # if defined AVERAGES && !defined USE_DEBUG
 #  define FILTERED
@@ -207,13 +174,16 @@
 # define ADD_M2OBC
 # undef RAMP_TIDES
 # define TIDES_ASTRO
-# define POT_TIDES
-#endif
+# undef POT_TIDES
 
-#define UV_DRAG_GRID
-#define ANA_DRAG
-#define LIMIT_BSTRESS
-#define UV_QDRAG
+# define UV_DRAG_GRID
+# define ANA_DRAG
+# define LIMIT_BSTRESS
+# undef UV_LDRAG
+# define UV_QDRAG
+#else
+# define UV_QDRAG
+#endif
 
 /* Boundary conditions...careful with grid orientation */
 
@@ -224,42 +194,6 @@
 #ifdef SOLVE3D
 # define ANA_BSFLUX
 # define ANA_BTFLUX
-# define ANA_SSFLUX
-# define ANA_STFLUX
-# define ANA_SMFLUX
 #else
-# undef ANA_SMFLUX
-# define BULK_FLUXES2D
-# undef CCSM_FLUXES2D
-#endif
-
-/*
-**  Biological model options.
-*/
-#ifdef SOLVE3D
-# undef BIO_COBALT
-#endif
-
-/* #define DEBUG_COBALT */
-/*#define COBALT_CONSERVATION_TEST */
-/*#define COBALT_NOSOURCE */
-/*#define COBALT_DO_NOTHING  */
-
-#if defined BIO_COBALT
-# undef FILTERED
-# undef AVERAGES2
-# define OPTIC_MANIZZA
-# define COBALT_MINERALS
-# undef COBALT_PHOSPHORUS
-# define COBALT_IRON
-# define NO_IRON_COAST
-# define COBALT_CARBON
-# define DIAGNOSTICS_BIO
-/*# define BENTHIC  */
-/*# define TIMESERIES */
-# undef ANA_ALK_DIC
-# undef ANA_BIOLOGY        /* analytical biology initial conditions */
-# define ANA_BPFLUX        /* analytical bottom passive tracers fluxes */
-# define ANA_SPFLUX        /* analytical surface passive tracers fluxes */
-# define COASTDIAT
+# define ANA_SMFLUX
 #endif
