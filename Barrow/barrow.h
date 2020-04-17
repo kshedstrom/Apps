@@ -18,7 +18,7 @@
 #define DEFLATE
 #undef PARALLEL_IO
 #define PERFECT_RESTART
-#undef NO_LBC_ATT
+#define NO_LBC_ATT
 
 /* general */
 
@@ -158,7 +158,7 @@
 /* Using both for different regions */
 #ifdef SOLVE3D
 # undef RUNOFF
-# define ONE_D_TRACER_SOURCE
+# define ONE_TRACER_SOURCE
 #endif
 
 /* tides */

@@ -1,5 +1,3 @@
-!  Ice model parameters
-!
 !==============================================================================
 !  Copyright (c) 2002-2017 The ROMS/TOMS Group                                !
 !========================================================= Hernan G. Arango ===
@@ -168,8 +166,6 @@ Hout(idTice) == T
 Hout(idHsno) == T
 Hout(idTimid) == T
 Hout(idT2ice) == T
-Hout(idApond) == T
-Hout(idHpond) == T
 Hout(idTauiw) == F
 Hout(idChuiw) == F
 Hout(idAgeice) == T
@@ -216,8 +212,6 @@ Aout(idTice) == T
 Aout(idHsno) == T
 Aout(idTimid) == T
 Aout(idT2ice) == T
-Aout(idApond) == T
-Aout(idHpond) == T
 Aout(idTauiw) == F
 Aout(idChuiw) == F
 Aout(idAgeice) == T
@@ -263,8 +257,6 @@ Aout2(idHice) == T
 Aout2(idTice) == T
 Aout2(idHsno) == T
 Aout2(idTimid) == T
-Aout2(idApond) == T
-Aout2(idHpond) == T
 Aout2(idTauiw) == F
 Aout2(idChuiw) == F
 Aout2(idAgeice) == T
@@ -285,8 +277,6 @@ Qout(idHice) == T
 Qout(idTice) == T
 Qout(idHsno) == T
 Qout(idTimid) == T
-Qout(idApond) == T
-Qout(idHpond) == T
 Qout(idTauiw) == F
 Qout(idChuiw) == F
 Qout(idAgeice) == T

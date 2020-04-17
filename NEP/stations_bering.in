@@ -90,8 +90,6 @@ Sout(idTice) == T
 Sout(idHsno) == T
 Sout(idTimid) == T
 Sout(idT2ice) == T
-Sout(idApond) == T
-Sout(idHpond) == T
 Sout(idTauiw) == F
 Sout(idChuiw) == F
 Sout(idAgeice) == T

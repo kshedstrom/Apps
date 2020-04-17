@@ -57,7 +57,7 @@
 ! http://marine.rutgers.edu/po/users/forum/viewtopic.php?t=294
 !
 !------------------------------------------------------------------------------
-!  SVN Repository
+!  Git Repository
 !------------------------------------------------------------------------------
 !
 
@@ -310,6 +310,105 @@
   'ocean_time'
   'idpthW'
   'w3dvar'
+  1.0d0
+
+'EBF'                                           ! Output
+  'Ekman buoyancy flux at PSI-points'
+  'Watt kg-1'                                   ! [m/s]
+  'EBF, scalar, series'
+  'ocean_time'
+  'idEBF'
+  'p2dvar'
+  1.0d0
+
+'strain'                                           ! Output
+  'strain'
+  'second-1'                                       ! [1/s]
+  'strain, scalar, series'
+  'ocean_time'
+  'idStr'
+  'p3dvar'
+  1.0d0
+
+'strain_sur'                                       ! Output
+  'surface strain'
+  'second-1'                                       ! [1/s]
+  'strain_sur, scalar, series'
+  'ocean_time'
+  'idStr2'
+  'p2dvar'
+  1.0d0
+
+'rvort_sur'                                        ! Output
+  'surface relative vorticity'
+  'second-1'                                       ! [1/s]
+  'rvort_sur, scalar, series'
+  'ocean_time'
+  'idRVsu'
+  'p2dvar'
+  1.0d0
+
+'pvort_sur'                                        ! Output
+  'surface potential vorticity'
+  'meter-1 second-1'                               ! [1/m/s]
+  'pvort_sur, scalar, series'
+  'ocean_time'
+  'idPVsu'
+  'p2dvar'
+  1.0d0
+
+'pvortk_sur'                                        ! Output
+  'surface potential vorticity, k component'
+  'meter-1 second-1'                               ! [1/m/s]
+  'pvortk_sur, scalar, series'
+  'ocean_time'
+  'idPVKsu'
+  'p2dvar'
+  1.0d0
+
+'pvortk'                                       ! Input/Output
+  'potential vorticity, k component'
+  'meter-1 second-1'                               ! [1/m/s]
+  'pvorticity k component, scalar, series'
+  'ocean_time'
+  'id3dPVK'
+  'p3dvar'
+  1.0d0
+
+'pvorti'                                       ! Input/Output
+  'potential vorticity, i component'
+  'meter-1 second-1'                               ! [1/m/s]
+  'pvorticity, i component, scalar, series'
+  'ocean_time'
+  'id3dPVI'
+  'p3dvar'
+  1.0d0
+
+'pvortj'                                       ! Input/Output
+  'potential vorticity, j component'
+  'meter-1 second-1'                               ! [1/m/s]
+  'pvorticity, j component, scalar, series'
+  'ocean_time'
+  'id3dPVJ'
+  'p3dvar'
+  1.0d0
+
+'pvorti_sur'                                        ! Output
+  'surface potential vorticity, i component'
+  'meter-1 second-1'                               ! [1/m/s]
+  'pvorti_sur, scalar, series'
+  'ocean_time'
+  'idPVIsu'
+  'p2dvar'
+  1.0d0
+
+'pvortj_sur'                                        ! Output
+  'surface potential vorticity, j component'
+  'meter-1 second-1'                               ! [1/m/s]
+  'pvortj_sur, scalar, series'
+  'ocean_time'
+  'idPVJsu'
+  'p2dvar'
   1.0d0
 
 !
@@ -1054,24 +1153,6 @@
   'ice divergence rate, scalar, series'
   'ocean_time'
   'idWdiv'
-  'r2dvar'
-  1.0d0
-
-'apond'
-  'surface melt water fraction on ice'
-  'meter'
-  'melt water fraction, scalar, series'
-  'ocean_time'
-  'idApond'
-  'r2dvar'
-  1.0d0
-
-'hpond'
-  'surface melt water thickness on ice'
-  'meter'
-  'melt water thickness, scalar, series'
-  'ocean_time'
-  'idHpond'
   'r2dvar'
   1.0d0
 
