@@ -176,10 +176,10 @@
 
 /* point sources (rivers, line sources) */
 
-/* Not using Runoff now */
+/* Not usually using Runoff now */
 #ifdef SOLVE3D
-# undef RUNOFF
-# define ONE_TRACER_SOURCE
+# define RUNOFF
+# undef ONE_TRACER_SOURCE
 #endif
 
 /* tides */
